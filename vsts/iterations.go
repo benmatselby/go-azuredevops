@@ -39,7 +39,7 @@ func (s *IterationsService) List(team string) ([]Iteration, error) {
 	var ir IterationsResponse
 	_, err = s.client.Execute(request, &ir)
 
-	return ir.Iterations, nil
+	return ir.Iterations, err
 }
 
 // GetByName will search the iterations for the account and project
