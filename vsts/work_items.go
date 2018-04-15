@@ -8,8 +8,7 @@ import (
 )
 
 // WorkItemsService handles communication with the work items methods on the API
-//
-// Docs: https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items
+// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items
 type WorkItemsService struct {
 	client *Client
 }
@@ -50,6 +49,7 @@ type WorkItemFields struct {
 }
 
 // GetForIteration will get a list of work items based on an iteration name
+// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items/list
 func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]WorkItem, error) {
 	queryIds, error := s.GetIdsForIteration(team, iteration)
 	if error != nil {
@@ -82,6 +82,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 }
 
 // GetIdsForIteration will return an array of ids for a given iteration
+// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations/get%20iteration%20work%20items
 func (s *WorkItemsService) GetIdsForIteration(team string, iteration Iteration) ([]int, error) {
 	URL := fmt.Sprintf(
 		"%s/_apis/work/teamsettings/iterations/%s/workitems?api-version=%s",

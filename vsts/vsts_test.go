@@ -52,6 +52,12 @@ func testMethod(t *testing.T, r *http.Request, want string) {
 	}
 }
 
+func testURL(t *testing.T, r *http.Request, want string) {
+	if got := r.URL; got.String() != want {
+		t.Errorf("request URL is %s, want %s", got, want)
+	}
+}
+
 func TestNewClient_canBuildOk(t *testing.T) {
 	c := NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
 
