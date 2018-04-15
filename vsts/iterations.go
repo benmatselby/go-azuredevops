@@ -6,8 +6,7 @@ import (
 )
 
 // IterationsService handles communication with the work items methods on the API
-//
-// Docs: https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations
+// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations
 type IterationsService struct {
 	client *Client
 }
@@ -26,6 +25,7 @@ type Iteration struct {
 }
 
 // List returns list of the iterations available to the user in VSTS
+// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations/list
 func (s *IterationsService) List(team string) ([]Iteration, error) {
 	URL := fmt.Sprintf(
 		"%s/_apis/work/teamsettings/iterations?api-version=4.1-preview",
