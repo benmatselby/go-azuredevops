@@ -12,3 +12,7 @@ test:
 .PHONY: test-cov
 test-cov: test
 	go tool cover -html=coverage.out
+
+.PHONY: doc
+doc:
+	godoc -http=:6060
