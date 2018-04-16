@@ -20,13 +20,14 @@ type Client struct {
 	BaseURL   string
 	UserAgent string
 
-	// Services used to proxy to other API endpoints
-	Iterations *IterationsService
-	WorkItems  *WorkItemsService
-
 	Account   string
 	Project   string
 	AuthToken string
+
+	// Services used to proxy to other API endpoints
+	Iterations *IterationsService
+	WorkItems  *WorkItemsService
+	Builds     *BuildsService
 }
 
 // NewClient gets the VSTS Client
@@ -39,6 +40,7 @@ func NewClient(account string, project string, token string) *Client {
 	c.BaseURL = fmt.Sprintf(baseURL, account, url.PathEscape(project))
 	c.Iterations = &IterationsService{client: c}
 	c.WorkItems = &WorkItemsService{client: c}
+	c.Builds = &BuildsService{client: c}
 
 	return c
 }
