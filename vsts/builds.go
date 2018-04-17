@@ -17,9 +17,11 @@ type BuildsListResponse struct {
 
 // Build represents a build in VSTS
 type Build struct {
-	Status     string          `json:"status"`
-	Result     string          `json:"result"`
-	Definition BuildDefinition `json:"definition"`
+	Status      string          `json:"status"`
+	Result      string          `json:"result"`
+	Definition  BuildDefinition `json:"definition"`
+	BuildNumber string          `json:"buildNumber"`
+	FinishTime  string          `json:"finishTime"`
 }
 
 // BuildDefinition represents the `definition` aspect of the response
