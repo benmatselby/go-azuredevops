@@ -22,6 +22,7 @@ type Build struct {
 	Definition  BuildDefinition `json:"definition"`
 	BuildNumber string          `json:"buildNumber"`
 	FinishTime  string          `json:"finishTime"`
+	Branch      string          `json:"sourceBranch"`
 }
 
 // BuildDefinition represents the `definition` aspect of the response
