@@ -1,5 +1,5 @@
 /*
-go-vsts is a Go client library for accessing the Visual Studio Team Services API.
+Package vsts is a Go client library for accessing the Visual Studio Team Services API.
 Installation
 	$ go get github.com/benmatselby/go-vsts/vsts
 	or
