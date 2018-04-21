@@ -31,7 +31,7 @@ type BuildDefinition struct {
 }
 
 // List returns list of the builds in VSTS
-// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds/list#build
+// utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds/list
 func (s *BuildsService) List() ([]Build, error) {
 	URL := fmt.Sprintf("/_apis/build/builds?api-version=4.1")
 
@@ -39,8 +39,8 @@ func (s *BuildsService) List() ([]Build, error) {
 	if err != nil {
 		return nil, err
 	}
-	var builds BuildsListResponse
-	_, err = s.client.Execute(request, &builds)
+	var response BuildsListResponse
+	_, err = s.client.Execute(request, &response)
 
-	return builds.Builds, err
+	return response.Builds, err
 }
