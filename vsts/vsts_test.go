@@ -1,4 +1,4 @@
-package vsts
+package vsts_test
 
 import (
 	"fmt"
@@ -7,6 +7,8 @@ import (
 	"net/url"
 	"os"
 	"testing"
+
+	"github.com/benmatselby/go-vsts/vsts"
 )
 
 const (
@@ -16,7 +18,7 @@ const (
 )
 
 // Pulled from https://github.com/google/go-github/blob/master/github/github_test.go
-func setup() (client *Client, mux *http.ServeMux, serverURL string, teardown func()) {
+func setup() (client *vsts.Client, mux *http.ServeMux, serverURL string, teardown func()) {
 	// mux is the HTTP request multiplexer used with the test server.
 	mux = http.NewServeMux()
 
@@ -39,7 +41,7 @@ func setup() (client *Client, mux *http.ServeMux, serverURL string, teardown fun
 
 	// client is the VSTS client being tested and is
 	// configured to use test server.
-	client = NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
+	client = vsts.NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
 
 	url, _ := url.Parse(server.URL + baseURLPath + "/")
 	client.BaseURL = url.String()
@@ -59,7 +61,7 @@ func testURL(t *testing.T, r *http.Request, want string) {
 }
 
 func TestNewClient_canBuildOk(t *testing.T) {
-	c := NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
+	c := vsts.NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
 
 	if c.Account != "VSTS_Account" {
 		t.Errorf("Client.Account = %s; expected %s", c.Account, "VSTS_Account")

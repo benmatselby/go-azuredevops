@@ -1,9 +1,11 @@
-package vsts
+package vsts_test
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
+
+	"github.com/benmatselby/go-vsts/vsts"
 )
 
 const (
@@ -93,7 +95,7 @@ func TestPullRequestsService_List(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			opt := &PullRequestListOptions{}
+			opt := &vsts.PullRequestListOptions{}
 			response, count, err := c.PullRequests.List(opt)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
