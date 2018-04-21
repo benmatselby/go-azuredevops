@@ -16,13 +16,22 @@ type PullRequestsResponse struct {
 
 // PullRequest describes the pull request
 type PullRequest struct {
-	Title   string `json:"title"`
-	Status  string `json:"status"`
-	Created string `json:"creationDate"`
+	Title   string          `json:"title"`
+	Status  string          `json:"status"`
+	Created string          `json:"creationDate"`
+	Repo    PullRequestRepo `json:"repository"`
+}
+
+// PullRequestRepo describes the repo within the pull request
+type PullRequestRepo struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	URL  string `json:"url"`
 }
 
 // PullRequestListOptions describes what the request to the API should look like
 type PullRequestListOptions struct {
+	// https://docs.microsoft.com/en-us/rest/api/vsts/git/pull%20requests/get%20pull%20requests%20by%20project#pullrequeststatus
 	State string `url:"searchCriteria.status,omitempty"`
 }
 
