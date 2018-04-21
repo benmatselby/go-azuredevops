@@ -16,10 +16,13 @@ type PullRequestsResponse struct {
 
 // PullRequest describes the pull request
 type PullRequest struct {
-	Title   string          `json:"title"`
-	Status  string          `json:"status"`
-	Created string          `json:"creationDate"`
-	Repo    PullRequestRepo `json:"repository"`
+	ID          int             `json:"pullRequestId,omitempty"`
+	Title       string          `json:"title"`
+	Description string          `json:"description"`
+	Status      string          `json:"status"`
+	Created     string          `json:"creationDate"`
+	Repo        PullRequestRepo `json:"repository"`
+	URL         string          `json:"url"`
 }
 
 // PullRequestRepo describes the repo within the pull request
