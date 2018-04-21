@@ -6,7 +6,10 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strings"
+
+	"github.com/google/go-querystring/query"
 )
 
 const (
@@ -25,9 +28,10 @@ type Client struct {
 	AuthToken string
 
 	// Services used to proxy to other API endpoints
-	Iterations *IterationsService
-	WorkItems  *WorkItemsService
-	Builds     *BuildsService
+	Iterations   *IterationsService
+	WorkItems    *WorkItemsService
+	Builds       *BuildsService
+	PullRequests *PullRequestsService
 }
 
 // NewClient gets the VSTS Client
@@ -41,6 +45,7 @@ func NewClient(account string, project string, token string) *Client {
 	c.Iterations = &IterationsService{client: c}
 	c.WorkItems = &WorkItemsService{client: c}
 	c.Builds = &BuildsService{client: c}
+	c.PullRequests = &PullRequestsService{client: c}
 
 	return c
 }
@@ -77,4 +82,27 @@ func (c *Client) Execute(request *http.Request, r interface{}) (*http.Response, 
 	}
 
 	return response, nil
+}
+
+// addOptions adds the parameters in opt as URL query parameters to s. opt
+// must be a struct whose fields may contain "url" tags.
+// From: https://github.com/google/go-github/blob/master/github/github.go
+func addOptions(s string, opt interface{}) (string, error) {
+	v := reflect.ValueOf(opt)
+	if v.Kind() == reflect.Ptr && v.IsNil() {
+		return s, nil
+	}
+
+	u, err := url.Parse(s)
+	if err != nil {
+		return s, err
+	}
+
+	qs, err := query.Values(opt)
+	if err != nil {
+		return s, err
+	}
+
+	u.RawQuery = qs.Encode()
+	return u.String(), nil
 }
