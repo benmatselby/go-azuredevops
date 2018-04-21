@@ -1,4 +1,4 @@
-package vsts
+package vsts_test
 
 import (
 	"fmt"

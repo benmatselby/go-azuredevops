@@ -1,9 +1,11 @@
-package vsts
+package vsts_test
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
+
+	"github.com/benmatselby/go-vsts/vsts"
 )
 
 const (
@@ -156,7 +158,7 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			iteration := Iteration{ID: "1"}
+			iteration := vsts.Iteration{ID: "1"}
 			workItems, err := c.WorkItems.GetForIteration("VSTS_TEAM", iteration)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
