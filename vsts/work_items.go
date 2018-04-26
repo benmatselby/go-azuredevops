@@ -42,10 +42,12 @@ type WorkItem struct {
 
 // WorkItemFields describes all the fields for a given work item
 type WorkItemFields struct {
-	ID    int    `json:"System.Id"`
-	Title string `json:"System.Title"`
-	State string `json:"System.State"`
-	Type  string `json:"System.WorkItemType"`
+	ID          int     `json:"System.Id"`
+	Title       string  `json:"System.Title"`
+	State       string  `json:"System.State"`
+	Type        string  `json:"System.WorkItemType"`
+	Points      float64 `json:"Microsoft.VSTS.Scheduling.StoryPoints"`
+	BoardColumn string  `json:"System.BoardColumn"`
 }
 
 // GetForIteration will get a list of work items based on an iteration name
@@ -61,12 +63,17 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 		workIds = append(workIds, strconv.Itoa(queryIds[index]))
 	}
 
+	// https://docs.microsoft.com/en-us/rest/api/vsts/wit/work%20item%20types%20field/list
+	fields := []string{
+		"System.Id", "System.Title", "System.State", "System.WorkItemType",
+		"Microsoft.VSTS.Scheduling.StoryPoints", "System.BoardColumn",
+	}
+
 	// Now we want to pad out the fields for the work items
 	URL := fmt.Sprintf(
 		"_apis/wit/workitems?ids=%s&fields=%s&api-version=%s",
 		strings.Join(workIds, ","),
-		// https://docs.microsoft.com/en-us/rest/api/vsts/wit/work%20item%20types%20field/list
-		"System.Id,System.Title,System.State,System.WorkItemType",
+		strings.Join(fields, ","),
 		"4.1-preview",
 	)
 
