@@ -133,7 +133,7 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 			idsBaseURL:        getIdsURL,
 			actualIdsURL:      "/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
 			getBaseURL:        getURL,
-			actualGetURL:      "/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType&api-version=4.1-preview",
+			actualGetURL:      "/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn&api-version=4.1-preview",
 			idsResponse:       getIdsResponse,
 			getResponse:       getResponse,
 			expectedWorkItems: 3,
