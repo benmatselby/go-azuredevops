@@ -32,6 +32,7 @@ type Client struct {
 	WorkItems    *WorkItemsService
 	Builds       *BuildsService
 	PullRequests *PullRequestsService
+	Boards       *BoardsService
 }
 
 // NewClient gets the VSTS Client
@@ -46,6 +47,7 @@ func NewClient(account string, project string, token string) *Client {
 	c.WorkItems = &WorkItemsService{client: c}
 	c.Builds = &BuildsService{client: c}
 	c.PullRequests = &PullRequestsService{client: c}
+	c.Boards = &BoardsService{client: c}
 
 	return c
 }
