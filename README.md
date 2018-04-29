@@ -5,6 +5,15 @@ go-vsts
 
 go-vsts is a Go client library for accessing the [Visual Studio Team Services API](https://docs.microsoft.com/en-gb/rest/api/vsts/). This is very much work in progress, so at the moment supports a small subset of the API.
 
+## Services
+
+There is partial implementation for the following services
+
+* Iterations
+* Work Items
+* Builds
+* Pull Requests
+* Boards
 
 ## Usage
 
