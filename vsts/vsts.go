@@ -12,7 +12,8 @@ import (
 )
 
 const (
-	baseURL = "https://%s.visualstudio.com/%s/"
+	baseURL   = "https://%s.visualstudio.com/%s/"
+	userAgent = "go-vsts"
 )
 
 // Client for interacting with VSTS
@@ -56,6 +57,11 @@ func (c *Client) NewRequest(method, URL string) (*http.Request, error) {
 	var buf io.ReadWriter
 
 	request, err := http.NewRequest(method, c.BaseURL+URL, buf)
+
+	if c.UserAgent == "" {
+		c.UserAgent = userAgent
+	}
+	request.Header.Set("User-Agent", c.UserAgent)
 	return request, err
 }
 
