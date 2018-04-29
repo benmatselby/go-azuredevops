@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	pullrequestsListURL = "/_apis/git/pullrequests"
+	pullrequestsListURL = "/VSTS_Project/_apis/git/pullrequests"
 	// https://docs.microsoft.com/en-us/rest/api/vsts/git/pull%20requests/get%20pull%20requests%20by%20project
 	pullrequestsResponse = `{
 		"value": [

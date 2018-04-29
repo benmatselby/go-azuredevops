@@ -74,7 +74,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 
 	// Now we want to pad out the fields for the work items
 	URL := fmt.Sprintf(
-		"_apis/wit/workitems?ids=%s&fields=%s&api-version=%s",
+		"/_apis/wit/workitems?ids=%s&fields=%s&api-version=%s",
 		strings.Join(workIds, ","),
 		strings.Join(fields, ","),
 		"4.1-preview",
@@ -95,7 +95,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations/get%20iteration%20work%20items
 func (s *WorkItemsService) GetIdsForIteration(team string, iteration Iteration) ([]int, error) {
 	URL := fmt.Sprintf(
-		"%s/_apis/work/teamsettings/iterations/%s/workitems?api-version=%s",
+		"/%s/_apis/work/teamsettings/iterations/%s/workitems?api-version=%s",
 		url.PathEscape(team),
 		iteration.ID,
 		"4.1-preview",

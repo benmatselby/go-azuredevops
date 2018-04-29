@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	listURL      = "/VSTS_TEAM/_apis/work/teamsettings/iterations"
+	listURL      = "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations"
 	listResponse = `{
 		"value": [
 		{

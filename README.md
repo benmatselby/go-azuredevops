@@ -9,11 +9,12 @@ go-vsts is a Go client library for accessing the [Visual Studio Team Services AP
 
 There is partial implementation for the following services
 
-* Iterations
-* Work Items
-* Builds
-* Pull Requests
 * Boards
+* Builds
+* Favourites
+* Iterations
+* Pull Requests
+* Work Items
 
 ## Usage
 

@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	boardListURL      = "/VSTS_TEAM/_apis/work/boards"
+	boardListURL      = "/VSTS_Project/VSTS_TEAM/_apis/work/boards"
 	boardListResponse = `{
 		"value": [
 			{
@@ -21,7 +21,7 @@ const (
 			}
 		]
 	}`
-	boardGetURL      = "/VSTS_TEAM/_apis/work/boards/de70b6e6-7cf3-4075-bbe8-8de651f37149"
+	boardGetURL      = "/VSTS_Project/VSTS_TEAM/_apis/work/boards/de70b6e6-7cf3-4075-bbe8-8de651f37149"
 	boardGetResponse = `{
 		"id": "de70b6e6-7cf3-4075-bbe8-8de651f37149",
 		"name": "Iteration x",

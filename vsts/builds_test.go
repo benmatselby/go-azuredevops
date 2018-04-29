@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	buildListURL      = "/_apis/build/builds"
+	buildListURL      = "/VSTS_Project/_apis/build/builds"
 	buildListResponse = `{
 		"value": [
 			{

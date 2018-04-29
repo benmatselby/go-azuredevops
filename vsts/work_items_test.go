@@ -9,8 +9,7 @@ import (
 )
 
 const (
-	getURL    = "/_apis/wit/workitems"
-	getIdsURL = "/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems"
+	getURL = "/VSTS_Project/_apis/wit/workitems"
 	// Pulled from https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items/list
 	getResponse = `{
 		"count": 3,
@@ -82,6 +81,7 @@ const (
 	  }
 	`
 	// Pulled from https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations/get%20iteration%20work%20items
+	getIdsURL      = "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems"
 	getIdsResponse = `{
 		"workItemRelations": [
 		  {
@@ -131,9 +131,9 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 		{
 			name:              "we get ids and we get iterations",
 			idsBaseURL:        getIdsURL,
-			actualIdsURL:      "/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
+			actualIdsURL:      "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
 			getBaseURL:        getURL,
-			actualGetURL:      "/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo&api-version=4.1-preview",
+			actualGetURL:      "/VSTS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo&api-version=4.1-preview",
 			idsResponse:       getIdsResponse,
 			getResponse:       getResponse,
 			expectedWorkItems: 3,
