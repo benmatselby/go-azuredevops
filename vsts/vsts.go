@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	baseURL   = "https://%s.visualstudio.com/%s/"
+	baseURL   = "https://%s.visualstudio.com"
 	userAgent = "go-vsts"
 )
 
@@ -28,11 +28,12 @@ type Client struct {
 	AuthToken string
 
 	// Services used to proxy to other API endpoints
-	Iterations   *IterationsService
-	WorkItems    *WorkItemsService
-	Builds       *BuildsService
-	PullRequests *PullRequestsService
 	Boards       *BoardsService
+	Builds       *BuildsService
+	Favourites   *FavouritesService
+	Iterations   *IterationsService
+	PullRequests *PullRequestsService
+	WorkItems    *WorkItemsService
 }
 
 // NewClient gets the VSTS Client
@@ -42,18 +43,31 @@ func NewClient(account string, project string, token string) *Client {
 		Project:   project,
 		AuthToken: token,
 	}
-	c.BaseURL = fmt.Sprintf(baseURL, account, url.PathEscape(project))
-	c.Iterations = &IterationsService{client: c}
-	c.WorkItems = &WorkItemsService{client: c}
-	c.Builds = &BuildsService{client: c}
-	c.PullRequests = &PullRequestsService{client: c}
+	c.BaseURL = fmt.Sprintf(baseURL, account)
+
 	c.Boards = &BoardsService{client: c}
+	c.Builds = &BuildsService{client: c}
+	c.Favourites = &FavouritesService{client: c}
+	c.Iterations = &IterationsService{client: c}
+	c.PullRequests = &PullRequestsService{client: c}
+	c.WorkItems = &WorkItemsService{client: c}
 
 	return c
 }
 
-// NewRequest creates an API request where the URL is relative from https://%s.visualstudio.com/%s
+// NewRequest creates an API request where the URL is relative from https://%s.visualstudio.com/%s.
+// Basically this includes the project which is most requests to the API
 func (c *Client) NewRequest(method, URL string) (*http.Request, error) {
+	request, err := c.NewBaseRequest(
+		method,
+		fmt.Sprintf("/%s/%s", url.PathEscape(c.Project), URL),
+	)
+	return request, err
+}
+
+// NewBaseRequest does not take into consideration the project
+// and simply uses the base https://%s.visualstudio.com base URL
+func (c *Client) NewBaseRequest(method, URL string) (*http.Request, error) {
 	var buf io.ReadWriter
 
 	request, err := http.NewRequest(method, c.BaseURL+URL, buf)

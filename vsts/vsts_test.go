@@ -6,7 +6,6 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"os"
-	"strings"
 	"testing"
 
 	"github.com/benmatselby/go-vsts/vsts"
@@ -74,9 +73,5 @@ func TestVsts_NewClient(t *testing.T) {
 
 	if c.AuthToken != "VSTS_Token" {
 		t.Errorf("Client.Token = %s; expected %s", c.AuthToken, "VSTS_Token")
-	}
-
-	if !strings.HasSuffix(c.BaseURL, "/") {
-		t.Errorf("The BaseURL needs a trailing /")
 	}
 }
