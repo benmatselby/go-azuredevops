@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
-	"strings"
 
 	"github.com/google/go-querystring/query"
 )
@@ -54,10 +53,6 @@ func NewClient(account string, project string, token string) *Client {
 
 // NewRequest creates an API request where the URL is relative from https://%s.visualstudio.com/%s
 func (c *Client) NewRequest(method, URL string) (*http.Request, error) {
-	if !strings.HasSuffix(c.BaseURL, "/") {
-		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
-	}
-
 	var buf io.ReadWriter
 
 	request, err := http.NewRequest(method, c.BaseURL+URL, buf)

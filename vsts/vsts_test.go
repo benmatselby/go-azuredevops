@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/benmatselby/go-vsts/vsts"
@@ -60,7 +61,7 @@ func testURL(t *testing.T, r *http.Request, want string) {
 	}
 }
 
-func TestNewClient_canBuildOk(t *testing.T) {
+func TestVsts_NewClient(t *testing.T) {
 	c := vsts.NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
 
 	if c.Account != "VSTS_Account" {
@@ -73,5 +74,9 @@ func TestNewClient_canBuildOk(t *testing.T) {
 
 	if c.AuthToken != "VSTS_Token" {
 		t.Errorf("Client.Token = %s; expected %s", c.AuthToken, "VSTS_Token")
+	}
+
+	if !strings.HasSuffix(c.BaseURL, "/") {
+		t.Errorf("The BaseURL needs a trailing /")
 	}
 }

@@ -3,6 +3,7 @@ package vsts_test
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"testing"
 )
 
@@ -77,6 +78,38 @@ func TestBoardsService_List(t *testing.T) {
 	}
 }
 
+func TestBuildsService_List_ResponseDecodeFailure(t *testing.T) {
+	c, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(boardListURL, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		json := "sad"
+		fmt.Fprint(w, json)
+	})
+
+	_, err := c.Boards.List("VSTS_TEAM")
+	if err == nil {
+		t.Fatalf("expected error decoding the response, did not get one")
+	}
+}
+
+func TestBuildsService_List_CallFailureForBuildingURL(t *testing.T) {
+	c, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(boardListURL, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		json := "{}"
+		fmt.Fprint(w, json)
+	})
+
+	_, err := c.Boards.List("")
+	if err != nil && !strings.Contains(err.Error(), "404") {
+		t.Fatalf("expected 404 error, got %s", err.Error())
+	}
+}
+
 func TestBuildsService_Get(t *testing.T) {
 	tt := []struct {
 		name        string
@@ -132,5 +165,37 @@ func TestBuildsService_Get(t *testing.T) {
 				t.Fatalf("expected column name: %s, got %s", tc.columnName, board.Columns[0].Name)
 			}
 		})
+	}
+}
+
+func TestBuildsService_Get_ResponseDecodeFailure(t *testing.T) {
+	c, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(boardGetURL, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		json := "sad"
+		fmt.Fprint(w, json)
+	})
+
+	_, err := c.Boards.Get("VSTS_TEAM", "b5f5e386-fd86-4459-af9a-72f881bd1b23")
+	if err == nil {
+		t.Fatalf("expected error decoding the response, did not get one")
+	}
+}
+
+func TestBuildsService_Get_CallFailureForBuildingURL(t *testing.T) {
+	c, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(boardGetURL, func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		json := "{}"
+		fmt.Fprint(w, json)
+	})
+
+	_, err := c.Boards.Get("VSTS_TEAM", "b5f5e386-fd86-4459-af9a-72f881bd1b23")
+	if err != nil && !strings.Contains(err.Error(), "404") {
+		t.Fatalf("expected 404 error, got %s", err.Error())
 	}
 }
