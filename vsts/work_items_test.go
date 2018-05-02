@@ -3,6 +3,7 @@ package vsts_test
 import (
 	"fmt"
 	"net/http"
+	"reflect"
 	"testing"
 
 	"github.com/benmatselby/go-vsts/vsts"
@@ -127,16 +128,20 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 		idsResponse       string
 		getResponse       string
 		expectedWorkItems int
+		tagList           []string
+		tagString         string
 	}{
 		{
 			name:              "we get ids and we get iterations",
 			idsBaseURL:        getIdsURL,
 			actualIdsURL:      "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
 			getBaseURL:        getURL,
-			actualGetURL:      "/VSTS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo&api-version=4.1-preview",
+			actualGetURL:      "/VSTS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo,System.Tags&api-version=4.1-preview",
 			idsResponse:       getIdsResponse,
 			getResponse:       getResponse,
 			expectedWorkItems: 3,
+			tagList:           []string{"Tag1", "Tag2"},
+			tagString:         "Tag1; Tag2",
 		},
 	}
 
@@ -166,6 +171,14 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 
 			if len(workItems) != tc.expectedWorkItems {
 				t.Fatalf("expected %d work items; got %d", tc.expectedWorkItems, len(workItems))
+			}
+
+			if !reflect.DeepEqual(workItems[1].Fields.TagList, tc.tagList) {
+				t.Fatalf("expected item %d to have a tag list of %v; got %v", 2, tc.tagList, workItems[1].Fields.TagList)
+			}
+
+			if workItems[1].Fields.Tags != tc.tagString {
+				t.Fatalf("expected item %d to have a tag string of %s; got %s", 2, tc.tagString, workItems[1].Fields.Tags)
 			}
 		})
 	}
