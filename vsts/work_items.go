@@ -50,6 +50,8 @@ type WorkItemFields struct {
 	BoardColumn string  `json:"System.BoardColumn"`
 	CreatedBy   string  `json:"System.CreatedBy"`
 	AssignedTo  string  `json:"System.AssignedTo"`
+	Tags        string  `json:"System.Tags"`
+	TagList     []string
 }
 
 // GetForIteration will get a list of work items based on an iteration name
@@ -69,7 +71,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 	fields := []string{
 		"System.Id", "System.Title", "System.State", "System.WorkItemType",
 		"Microsoft.VSTS.Scheduling.StoryPoints", "System.BoardColumn",
-		"System.CreatedBy", "System.AssignedTo",
+		"System.CreatedBy", "System.AssignedTo", "System.Tags",
 	}
 
 	// Now we want to pad out the fields for the work items
@@ -87,6 +89,10 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 
 	var response WorkItemListResponse
 	_, err = s.client.Execute(request, &response)
+
+	for index := range response.WorkItems {
+		response.WorkItems[index].Fields.TagList = strings.Split(response.WorkItems[index].Fields.Tags, "; ")
+	}
 
 	return response.WorkItems, nil
 }
