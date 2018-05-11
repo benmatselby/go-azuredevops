@@ -28,12 +28,13 @@ type Client struct {
 	AuthToken string
 
 	// Services used to proxy to other API endpoints
-	Boards       *BoardsService
-	Builds       *BuildsService
-	Favourites   *FavouritesService
-	Iterations   *IterationsService
-	PullRequests *PullRequestsService
-	WorkItems    *WorkItemsService
+	Boards           *BoardsService
+	BuildDefinitions *BuildDefinitionsService
+	Builds           *BuildsService
+	Favourites       *FavouritesService
+	Iterations       *IterationsService
+	PullRequests     *PullRequestsService
+	WorkItems        *WorkItemsService
 }
 
 // NewClient gets the VSTS Client
@@ -46,6 +47,7 @@ func NewClient(account string, project string, token string) *Client {
 	c.BaseURL = fmt.Sprintf(baseURL, account)
 
 	c.Boards = &BoardsService{client: c}
+	c.BuildDefinitions = &BuildDefinitionsService{client: c}
 	c.Builds = &BuildsService{client: c}
 	c.Favourites = &FavouritesService{client: c}
 	c.Iterations = &IterationsService{client: c}
