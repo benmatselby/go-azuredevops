@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+
+	"github.com/benmatselby/go-vsts/vsts"
 )
 
 const (
@@ -54,7 +56,8 @@ func TestBuildsService_List(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			builds, err := c.Builds.List()
+			options := &vsts.BuildsListOptions{}
+			builds, err := c.Builds.List(options)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
 			}

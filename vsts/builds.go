@@ -25,15 +25,18 @@ type Build struct {
 	Branch      string          `json:"sourceBranch"`
 }
 
-// BuildDefinition represents the `definition` aspect of the response
-type BuildDefinition struct {
-	Name string `json:"name"`
+// BuildsListOptions describes what the request to the API should look like
+type BuildsListOptions struct {
+	Definitions string `url:"definitions,omitempty"`
+	Branch      string `url:"branchName,omitempty"`
+	Count       int    `url:"$top,omitempty"`
 }
 
 // List returns list of the builds in VSTS
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds/list
-func (s *BuildsService) List() ([]Build, error) {
+func (s *BuildsService) List(opts *BuildsListOptions) ([]Build, error) {
 	URL := fmt.Sprintf("/_apis/build/builds?api-version=4.1")
+	URL, err := addOptions(URL, opts)
 
 	request, err := s.client.NewRequest("GET", URL)
 	if err != nil {
