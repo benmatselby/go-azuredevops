@@ -33,7 +33,7 @@ func TestIterationService_GetByName(t *testing.T) {
 		found     bool
 	}{
 		{name: "iteration found", iteration: "Sprint 2", found: true},
-		{name: "iteration not found", iteration: "Sprint Unkown", found: false},
+		{name: "iteration not found", iteration: "Sprint Unknown", found: false},
 	}
 
 	for _, tc := range tt {

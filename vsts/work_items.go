@@ -28,7 +28,7 @@ type WorkItemRelation struct {
 	ID int `json:"id"`
 }
 
-// WorkItemListResponse describes the list reponse for work items
+// WorkItemListResponse describes the list response for work items
 type WorkItemListResponse struct {
 	WorkItems []WorkItem `json:"value"`
 }
@@ -94,7 +94,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 		response.WorkItems[index].Fields.TagList = strings.Split(response.WorkItems[index].Fields.Tags, "; ")
 	}
 
-	return response.WorkItems, nil
+	return response.WorkItems, err
 }
 
 // GetIdsForIteration will return an array of ids for a given iteration
@@ -121,5 +121,5 @@ func (s *WorkItemsService) GetIdsForIteration(team string, iteration Iteration) 
 		queryIds = append(queryIds, relationship.Target.ID)
 	}
 
-	return queryIds, nil
+	return queryIds, err
 }
