@@ -12,3 +12,6 @@ before_install:
   - chmod +x $GOPATH/bin/dep
 script:
   - make all
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
