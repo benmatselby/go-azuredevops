@@ -1,6 +1,7 @@
 go-vsts
 =======
 
+[![GoDoc](https://godoc.org/github.com/benmatselby/go-vsts/vsts?status.svg)](https://godoc.org/github.com/benmatselby/go-vsts/vsts)
 [![Build Status](https://travis-ci.org/benmatselby/go-vsts.png?branch=master)](https://travis-ci.org/benmatselby/go-vsts)
 [![codecov](https://codecov.io/gh/benmatselby/go-vsts/branch/master/graph/badge.svg)](https://codecov.io/gh/benmatselby/go-vsts)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benmatselby/go-vsts?style=flat-square)](https://goreportcard.com/report/github.com/benmatselby/go-vsts)
