@@ -18,10 +18,13 @@ type IterationsResponse struct {
 
 // Iteration describes an iteration
 type Iteration struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-	Path string `json:"path"`
-	URL  string `json:"url"`
+	ID        string          `json:"id"`
+	Name      string          `json:"name"`
+	Path      string          `json:"path"`
+	URL       string          `json:"url"`
+	StartDate string          `json:"startDate,omitempty"`
+	EndDate   string          `json:"finishDate,omitempty"`
+	WorkItems [][]interface{} `json:"workItems,omitempty"`
 }
 
 // List returns list of the iterations available to the user in VSTS
