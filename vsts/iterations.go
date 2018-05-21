@@ -48,9 +48,9 @@ func (s *IterationsService) List(team string) ([]Iteration, error) {
 // GetByName will search the iterations for the account and project
 // and return a single iteration if the names match
 func (s *IterationsService) GetByName(team string, name string) (*Iteration, error) {
-	iterations, error := s.List(team)
-	if error != nil {
-		return nil, error
+	iterations, err := s.List(team)
+	if err != nil {
+		return nil, err
 	}
 
 	for index := 0; index < len(iterations); index++ {

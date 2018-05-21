@@ -57,9 +57,9 @@ type WorkItemFields struct {
 // GetForIteration will get a list of work items based on an iteration name
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items/list
 func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]WorkItem, error) {
-	queryIds, error := s.GetIdsForIteration(team, iteration)
-	if error != nil {
-		return nil, error
+	queryIds, err := s.GetIdsForIteration(team, iteration)
+	if err != nil {
+		return nil, err
 	}
 
 	var workIds []string
