@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/benmatselby/go-vsts/vsts"
 )
@@ -132,7 +133,7 @@ func TestDeliveryPlansService_GetTimeLine(t *testing.T) {
 		fmt.Fprint(w, json)
 	})
 
-	timeline, err := c.DeliveryPlans.GetTimeLine(planID)
+	timeline, err := c.DeliveryPlans.GetTimeLine(planID, "", "")
 	if err != nil {
 		t.Fatalf("returned error: %v", err)
 	}
@@ -159,5 +160,49 @@ func TestDeliveryPlansService_GetTimeLine(t *testing.T) {
 			1097,
 			timeline.Teams[0].Iterations[0].WorkItems[0][vsts.DeliveryPlanWorkItemIDKey].(float64),
 		)
+	}
+}
+
+func TestDeliveryPlansService_GetTimeLineDates(t *testing.T) {
+	tt := []struct {
+		name        string
+		expectedURL string
+		startDate   string
+		endDate     string
+	}{
+		{
+			name:        "no start date defaults to today with end of 65 days",
+			startDate:   "",
+			endDate:     time.Now().AddDate(0, 0, 65).Format("2006-01-02"),
+			expectedURL: "/VSTS_Project/_apis/work/plans/7154147c-43ca-44a9-9df0-2fa0a7f9d6b2/deliverytimeline?api-version=5.0-preview.1&startDate=" + time.Now().Format("2006-01-02") + "&endDate=" + time.Now().AddDate(0, 0, 65).Format("2006-01-02"),
+		},
+		{
+			name:        "if start date specified use start and end dates",
+			startDate:   "2010-01-01",
+			endDate:     "2010-03-07",
+			expectedURL: "/VSTS_Project/_apis/work/plans/7154147c-43ca-44a9-9df0-2fa0a7f9d6b2/deliverytimeline?api-version=5.0-preview.1&startDate=2010-01-01&endDate=2010-03-07",
+		},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+
+			c, mux, _, teardown := setup()
+			defer teardown()
+
+			planID := "7154147c-43ca-44a9-9df0-2fa0a7f9d6b2"
+
+			mux.HandleFunc(deliveryPlanGetURL, func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, "GET")
+				testURL(t, r, tc.expectedURL)
+				json := deliveryPlanGetTimeLineResponse
+				fmt.Fprint(w, json)
+			})
+
+			_, err := c.DeliveryPlans.GetTimeLine(planID, tc.startDate, tc.endDate)
+			if err != nil {
+				t.Fatalf("returned error: %v", err)
+			}
+		})
 	}
 }
