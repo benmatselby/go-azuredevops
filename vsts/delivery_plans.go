@@ -1,6 +1,9 @@
 package vsts
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // DeliveryPlansService handles communication with the deliverytimeline methods on the API
 // utilising https://docs.microsoft.com/en-us/rest/api/vsts/work/deliverytimeline
@@ -74,11 +77,19 @@ func (s *DeliveryPlansService) List(opts *DeliveryPlansListOptions) ([]DeliveryP
 }
 
 // GetTimeLine will fetch the details about a specific delivery plan
-func (s *DeliveryPlansService) GetTimeLine(ID string) (*DeliveryPlanTimeLine, error) {
+func (s *DeliveryPlansService) GetTimeLine(ID string, startDate, endDate string) (*DeliveryPlanTimeLine, error) {
 	URL := fmt.Sprintf(
 		"_apis/work/plans/%s/deliverytimeline?api-version=5.0-preview.1",
 		ID,
 	)
+
+	if startDate == "" {
+		startDate = time.Now().Format("2006-01-02")
+		// The 65 date thing is arbitrary from the API
+		endDate = time.Now().AddDate(0, 0, 65).Format("2006-01-02")
+	}
+
+	URL = fmt.Sprintf(URL+"&startDate=%s&endDate=%s", startDate, endDate)
 
 	request, err := s.client.NewRequest("GET", URL)
 	if err != nil {
