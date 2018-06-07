@@ -18,13 +18,19 @@ type BuildDefinitionsListResponse struct {
 
 // BuildDefinition represents a build definition in VSTS
 type BuildDefinition struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID         int    `json:"id"`
+	Name       string `json:"name"`
+	Repository struct {
+		ID   string `json:"id,omitempty"`
+		Type string `json:"type,omitempty"`
+		Name string `json:"name,omitempty"`
+	} `json:"repository,omitempty"`
 }
 
 // BuildDefinitionsListOptions describes what the request to the API should look like
 type BuildDefinitionsListOptions struct {
-	Path string `url:"path,omitempty"`
+	Path                 string `url:"path,omitempty"`
+	IncludeAllProperties bool   `url:"includeAllProperties,omitempty"`
 }
 
 // List returns a list of build definitions in VSTS

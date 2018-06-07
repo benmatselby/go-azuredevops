@@ -33,6 +33,7 @@ type Client struct {
 	Builds           *BuildsService
 	DeliveryPlans    *DeliveryPlansService
 	Favourites       *FavouritesService
+	Git              *GitService
 	Iterations       *IterationsService
 	PullRequests     *PullRequestsService
 	WorkItems        *WorkItemsService
@@ -51,6 +52,7 @@ func NewClient(account string, project string, token string) *Client {
 	c.BuildDefinitions = &BuildDefinitionsService{client: c}
 	c.Builds = &BuildsService{client: c}
 	c.Favourites = &FavouritesService{client: c}
+	c.Git = &GitService{client: c}
 	c.Iterations = &IterationsService{client: c}
 	c.PullRequests = &PullRequestsService{client: c}
 	c.WorkItems = &WorkItemsService{client: c}
