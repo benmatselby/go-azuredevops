@@ -44,7 +44,7 @@ func (s *PullRequestsService) List(opts *PullRequestListOptions) ([]PullRequest,
 	URL := fmt.Sprintf("/_apis/git/pullrequests?api-version=4.1")
 	URL, err := addOptions(URL, opts)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, 0, err
 	}

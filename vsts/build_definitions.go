@@ -33,7 +33,7 @@ func (s *BuildDefinitionsService) List(opts *BuildDefinitionsListOptions) ([]Bui
 	URL := fmt.Sprintf("_apis/build/definitions?api-version=5.0-preview.6")
 	URL, err := addOptions(URL, opts)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}

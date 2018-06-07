@@ -31,7 +31,7 @@ func (s *FavouritesService) List() ([]Favourite, int, error) {
 		"Microsoft.TeamFoundation.Git.Repository", // @todo This needs fixing
 	)
 
-	request, err := s.client.NewBaseRequest("GET", URL)
+	request, err := s.client.NewBaseRequest("GET", URL, nil)
 	if err != nil {
 		return nil, 0, err
 	}

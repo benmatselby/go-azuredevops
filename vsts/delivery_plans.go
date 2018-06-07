@@ -66,7 +66,7 @@ func (s *DeliveryPlansService) List(opts *DeliveryPlansListOptions) ([]DeliveryP
 	URL := fmt.Sprintf("_apis/work/plans?api-version=5.0-preview.6")
 	URL, err := addOptions(URL, opts)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -91,7 +91,7 @@ func (s *DeliveryPlansService) GetTimeLine(ID string, startDate, endDate string)
 
 	URL = fmt.Sprintf(URL+"&startDate=%s&endDate=%s", startDate, endDate)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -38,7 +38,7 @@ func (s *BuildsService) List(opts *BuildsListOptions) ([]Build, error) {
 	URL := fmt.Sprintf("/_apis/build/builds?api-version=4.1")
 	URL, err := addOptions(URL, opts)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -35,7 +35,7 @@ func (s *IterationsService) List(team string) ([]Iteration, error) {
 		url.PathEscape(team),
 	)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}

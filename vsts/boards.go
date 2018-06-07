@@ -37,7 +37,7 @@ func (s *BoardsService) List(team string) ([]Board, error) {
 		url.PathEscape(team),
 	)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (s *BoardsService) Get(team string, id string) (*Board, error) {
 		id,
 	)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}

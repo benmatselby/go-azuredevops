@@ -61,17 +61,18 @@ func NewClient(account string, project string, token string) *Client {
 
 // NewRequest creates an API request where the URL is relative from https://%s.visualstudio.com/%s.
 // Basically this includes the project which is most requests to the API
-func (c *Client) NewRequest(method, URL string) (*http.Request, error) {
+func (c *Client) NewRequest(method, URL string, body interface{}) (*http.Request, error) {
 	request, err := c.NewBaseRequest(
 		method,
 		fmt.Sprintf("/%s/%s", url.PathEscape(c.Project), URL),
+		body,
 	)
 	return request, err
 }
 
 // NewBaseRequest does not take into consideration the project
 // and simply uses the base https://%s.visualstudio.com base URL
-func (c *Client) NewBaseRequest(method, URL string) (*http.Request, error) {
+func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Request, error) {
 	var buf io.ReadWriter
 
 	request, err := http.NewRequest(method, c.BaseURL+URL, buf)

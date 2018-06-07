@@ -82,7 +82,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 		"4.1-preview",
 	)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func (s *WorkItemsService) GetIdsForIteration(team string, iteration Iteration) 
 		"4.1-preview",
 	)
 
-	request, err := s.client.NewRequest("GET", URL)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}
