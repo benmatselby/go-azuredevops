@@ -1,4 +1,4 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
@@ -6,11 +6,11 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
-	getURL = "/VSTS_Project/_apis/wit/workitems"
+	getURL = "/AZURE_DEVOPS_Project/_apis/wit/workitems"
 	// Pulled from https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items/list
 	getResponse = `{
 		"count": 3,
@@ -82,7 +82,7 @@ const (
 	  }
 	`
 	// Pulled from https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations/get%20iteration%20work%20items
-	getIdsURL      = "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems"
+	getIdsURL      = "/AZURE_DEVOPS_Project/AZURE_DEVOPS_TEAM/_apis/work/teamsettings/iterations/1/workitems"
 	getIdsResponse = `{
 		"workItemRelations": [
 		  {
@@ -134,9 +134,9 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 		{
 			name:              "we get ids and we get iterations",
 			idsBaseURL:        getIdsURL,
-			actualIdsURL:      "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
+			actualIdsURL:      "/AZURE_DEVOPS_Project/AZURE_DEVOPS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
 			getBaseURL:        getURL,
-			actualGetURL:      "/VSTS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo,System.Tags&api-version=4.1-preview",
+			actualGetURL:      "/AZURE_DEVOPS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo,System.Tags&api-version=4.1-preview",
 			idsResponse:       getIdsResponse,
 			getResponse:       getResponse,
 			expectedWorkItems: 3,
@@ -163,8 +163,8 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			iteration := vsts.Iteration{ID: "1"}
-			workItems, err := c.WorkItems.GetForIteration("VSTS_TEAM", iteration)
+			iteration := azuredevops.Iteration{ID: "1"}
+			workItems, err := c.WorkItems.GetForIteration("AZURE_DEVOPS_TEAM", iteration)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
 			}

@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"encoding/json"
@@ -13,10 +13,10 @@ import (
 
 const (
 	baseURL   = "https://%s.visualstudio.com"
-	userAgent = "go-vsts"
+	userAgent = "go-azuredevops"
 )
 
-// Client for interacting with VSTS
+// Client for interacting with the Azure DevOps API
 type Client struct {
 	client *http.Client
 
@@ -39,7 +39,7 @@ type Client struct {
 	WorkItems        *WorkItemsService
 }
 
-// NewClient gets the VSTS Client
+// NewClient gets a new Azure DevOps Client
 func NewClient(account string, project string, token string) *Client {
 	c := &Client{
 		Account:   account,
@@ -86,7 +86,7 @@ func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Req
 	return request, err
 }
 
-// Execute runs all the http requests to VSTS
+// Execute runs all the http requests on the API
 func (c *Client) Execute(request *http.Request, r interface{}) (*http.Response, error) {
 	request.SetBasicAuth("", c.AuthToken)
 

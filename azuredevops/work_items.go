@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type WorkItemsService struct {
 	client *Client
 }
 
-// WorkItemsResponse describes the relationships between work items in VSTS
+// WorkItemsResponse describes the relationships between work items
 type WorkItemsResponse struct {
 	WorkItemRelationships []WorkItemRelationship `json:"workItemRelations"`
 }

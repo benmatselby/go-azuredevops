@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ type BuildDefinitionsListResponse struct {
 	Count            int               `json:"count"`
 }
 
-// BuildDefinition represents a build definition in VSTS
+// BuildDefinition represents a build definition
 type BuildDefinition struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`
@@ -33,7 +33,7 @@ type BuildDefinitionsListOptions struct {
 	IncludeAllProperties bool   `url:"includeAllProperties,omitempty"`
 }
 
-// List returns a list of build definitions in VSTS
+// List returns a list of build definitions
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/definitions/list
 func (s *BuildDefinitionsService) List(opts *BuildDefinitionsListOptions) ([]BuildDefinition, error) {
 	URL := fmt.Sprintf("_apis/build/definitions?api-version=5.0-preview.6")

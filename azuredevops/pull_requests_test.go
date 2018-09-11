@@ -1,15 +1,15 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
-	pullrequestsListURL = "/VSTS_Project/_apis/git/pullrequests"
+	pullrequestsListURL = "/AZURE_DEVOPS_Project/_apis/git/pullrequests"
 	// https://docs.microsoft.com/en-us/rest/api/vsts/git/pull%20requests/get%20pull%20requests%20by%20project
 	pullrequestsResponse = `{
 		"value": [
@@ -95,7 +95,7 @@ func TestPullRequestsService_List(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			opt := &vsts.PullRequestListOptions{}
+			opt := &azuredevops.PullRequestListOptions{}
 			response, count, err := c.PullRequests.List(opt)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)

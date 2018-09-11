@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ type FavouritesResponse struct {
 	Favourites []Favourite `json:"value"`
 }
 
-// Favourite describes what a favourite is in VSTS
+// Favourite describes what a favourite is
 type Favourite struct {
 	ID           string `json:"id"`
 	ArtifactName string `json:"artifactName"`

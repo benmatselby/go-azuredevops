@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import "fmt"
 
@@ -38,7 +38,7 @@ type PullRequestListOptions struct {
 	State string `url:"searchCriteria.status,omitempty"`
 }
 
-// List returns list of the pull requests in VSTS
+// List returns list of the pull requests
 // utilising https://docs.microsoft.com/en-us/rest/api/vsts/git/pull%20requests/get%20pull%20requests%20by%20project
 func (s *PullRequestsService) List(opts *PullRequestListOptions) ([]PullRequest, int, error) {
 	URL := fmt.Sprintf("/_apis/git/pullrequests?api-version=4.1")

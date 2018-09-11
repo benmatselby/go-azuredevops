@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -27,7 +27,7 @@ type Iteration struct {
 	WorkItems [][]interface{} `json:"workItems,omitempty"`
 }
 
-// List returns list of the iterations available to the user in VSTS
+// List returns list of the iterations available to the user
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations/list
 func (s *IterationsService) List(team string) ([]Iteration, error) {
 	URL := fmt.Sprintf(

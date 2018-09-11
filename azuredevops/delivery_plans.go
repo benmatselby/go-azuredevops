@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -61,7 +61,7 @@ const (
 type DeliveryPlansListOptions struct {
 }
 
-// List returns a list of delivery plans in VSTS
+// List returns a list of delivery plans
 func (s *DeliveryPlansService) List(opts *DeliveryPlansListOptions) ([]DeliveryPlan, int, error) {
 	URL := fmt.Sprintf("_apis/work/plans?api-version=5.0-preview.6")
 	URL, err := addOptions(URL, opts)
