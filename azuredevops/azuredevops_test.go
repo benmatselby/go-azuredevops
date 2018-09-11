@@ -1,4 +1,4 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 )
 
 // Pulled from https://github.com/google/go-github/blob/master/github/github_test.go
-func setup() (client *vsts.Client, mux *http.ServeMux, serverURL string, teardown func()) {
+func setup() (client *azuredevops.Client, mux *http.ServeMux, serverURL string, teardown func()) {
 	// mux is the HTTP request multiplexer used with the test server.
 	mux = http.NewServeMux()
 
@@ -39,9 +39,8 @@ func setup() (client *vsts.Client, mux *http.ServeMux, serverURL string, teardow
 	// server is a test HTTP server used to provide mock API responses.
 	server := httptest.NewServer(apiHandler)
 
-	// client is the VSTS client being tested and is
-	// configured to use test server.
-	client = vsts.NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
+	// The client being tested and is configured to use test server.
+	client = azuredevops.NewClient("AZURE_DEVOPS_Account", "AZURE_DEVOPS_Project", "AZURE_DEVOPS_TOKEN")
 
 	url, _ := url.Parse(server.URL + baseURLPath + "/")
 	client.BaseURL = url.String()
@@ -60,18 +59,18 @@ func testURL(t *testing.T, r *http.Request, want string) {
 	}
 }
 
-func TestVsts_NewClient(t *testing.T) {
-	c := vsts.NewClient("VSTS_Account", "VSTS_Project", "VSTS_Token")
+func Test_NewClient(t *testing.T) {
+	c := azuredevops.NewClient("AZURE_DEVOPS_ACCOUNT", "AZURE_DEVOPS_Project", "AZURE_DEVOPS_TOKEN")
 
-	if c.Account != "VSTS_Account" {
-		t.Errorf("Client.Account = %s; expected %s", c.Account, "VSTS_Account")
+	if c.Account != "AZURE_DEVOPS_ACCOUNT" {
+		t.Errorf("Client.Account = %s; expected %s", c.Account, "AZURE_DEVOPS_ACCOUNT")
 	}
 
-	if c.Project != "VSTS_Project" {
-		t.Errorf("Client.Project = %s; expected %s", c.Project, "VSTS_Project")
+	if c.Project != "AZURE_DEVOPS_Project" {
+		t.Errorf("Client.Project = %s; expected %s", c.Project, "AZURE_DEVOPS_Project")
 	}
 
-	if c.AuthToken != "VSTS_Token" {
-		t.Errorf("Client.Token = %s; expected %s", c.AuthToken, "VSTS_Token")
+	if c.AuthToken != "AZURE_DEVOPS_TOKEN" {
+		t.Errorf("Client.Token = %s; expected %s", c.AuthToken, "AZURE_DEVOPS_TOKEN")
 	}
 }

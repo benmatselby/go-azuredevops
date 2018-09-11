@@ -1,15 +1,15 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
-	buildListURL      = "/VSTS_Project/_apis/build/builds"
+	buildListURL      = "/AZURE_DEVOPS_Project/_apis/build/builds"
 	buildListResponse = `{
 		"value": [
 			{
@@ -56,7 +56,7 @@ func TestBuildsService_List(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			options := &vsts.BuildsListOptions{}
+			options := &azuredevops.BuildsListOptions{}
 			builds, err := c.Builds.List(options)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)

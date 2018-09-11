@@ -1,4 +1,4 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -29,7 +29,7 @@ type BoardColumn struct {
 	Name string `json:"name"`
 }
 
-// List returns list of the boards in VSTS
+// List returns list of the boards
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/boards/list
 func (s *BoardsService) List(team string) ([]Board, error) {
 	URL := fmt.Sprintf(

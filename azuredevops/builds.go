@@ -1,4 +1,4 @@
-package vsts
+package azuredevops
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ type BuildsListResponse struct {
 	Builds []Build `json:"value"`
 }
 
-// Build represents a build in VSTS
+// Build represents a build
 type Build struct {
 	Status      string          `json:"status"`
 	Result      string          `json:"result"`
@@ -32,7 +32,7 @@ type BuildsListOptions struct {
 	Count       int    `url:"$top,omitempty"`
 }
 
-// List returns list of the builds in VSTS
+// List returns list of the builds
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds/list
 func (s *BuildsService) List(opts *BuildsListOptions) ([]Build, error) {
 	URL := fmt.Sprintf("/_apis/build/builds?api-version=4.1")

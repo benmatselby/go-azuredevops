@@ -1,15 +1,15 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
-	buildDefinitionListURL      = "/VSTS_Project/_apis/build/definitions"
+	buildDefinitionListURL      = "/AZURE_DEVOPS_Project/_apis/build/definitions"
 	buildDefinitionListResponse = `{
 		"value": [
 			{
@@ -50,7 +50,7 @@ func TestBuildDefinitionsService_List(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			options := &vsts.BuildDefinitionsListOptions{}
+			options := &azuredevops.BuildDefinitionsListOptions{}
 			buildDefs, err := c.BuildDefinitions.List(options)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)

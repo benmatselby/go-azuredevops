@@ -2,7 +2,7 @@
 explain:
 	### Welcome
 	#
-	# Makefile for go-vsts
+	# Makefile for go-azuredevops
 	#
 
 .PHONY: clean

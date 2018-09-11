@@ -1,4 +1,4 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	listURL      = "/VSTS_Project/VSTS_TEAM/_apis/work/teamsettings/iterations"
+	listURL      = "/AZURE_DEVOPS_Project/AZURE_DEVOPS_TEAM/_apis/work/teamsettings/iterations"
 	listResponse = `{
 		"value": [
 		{
@@ -47,7 +47,7 @@ func TestIterationService_GetByName(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			iteration, err := c.Iterations.GetByName("VSTS_TEAM", tc.iteration)
+			iteration, err := c.Iterations.GetByName("AZURE_DEVOPS_TEAM", tc.iteration)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
 			}
@@ -90,7 +90,7 @@ func TestIterationService_List(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			iterations, err := c.Iterations.List("VSTS_TEAM")
+			iterations, err := c.Iterations.List("AZURE_DEVOPS_TEAM")
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
 			}

@@ -1,15 +1,15 @@
-package vsts_test
+package azuredevops_test
 
 import (
 	"fmt"
 	"net/http"
 	"testing"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
-	gitRefsListURL      = "/VSTS_Project/_apis/git/repositories/vscode/refs/heads"
+	gitRefsListURL      = "/AZURE_DEVOPS_Project/_apis/git/repositories/vscode/refs/heads"
 	gitRefsListResponse = `{
 		"count": 6,
 		"value": [
@@ -72,7 +72,7 @@ func TestGitService_ListRefs(t *testing.T) {
 				fmt.Fprint(w, json)
 			})
 
-			opts := vsts.GitRefListOptions{}
+			opts := azuredevops.GitRefListOptions{}
 			refs, count, err := c.Git.ListRefs("vscode", "heads", &opts)
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
