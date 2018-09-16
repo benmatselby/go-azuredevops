@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	baseURL   = "https://%s.visualstudio.com"
+	baseURL   = "https://dev.azure.com/%s"
 	userAgent = "go-azuredevops"
 )
 
@@ -36,6 +36,7 @@ type Client struct {
 	Git              *GitService
 	Iterations       *IterationsService
 	PullRequests     *PullRequestsService
+	Teams            *TeamsService
 	WorkItems        *WorkItemsService
 }
 
@@ -56,6 +57,7 @@ func NewClient(account string, project string, token string) *Client {
 	c.Iterations = &IterationsService{client: c}
 	c.PullRequests = &PullRequestsService{client: c}
 	c.WorkItems = &WorkItemsService{client: c}
+	c.Teams = &TeamsService{client: c}
 	c.DeliveryPlans = &DeliveryPlansService{client: c}
 
 	return c
