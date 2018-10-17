@@ -27,9 +27,26 @@ type Build struct {
 
 // BuildsListOptions describes what the request to the API should look like
 type BuildsListOptions struct {
-	Definitions string `url:"definitions,omitempty"`
-	Branch      string `url:"branchName,omitempty"`
-	Count       int    `url:"$top,omitempty"`
+	Definitions      string `url:"definitions,omitempty"`
+	Branch           string `url:"branchName,omitempty"`
+	Count            int    `url:"$top,omitempty"`
+	Repository       string `url:"repositoryId,omitempty"`
+	BuildIDs         string `url:"buildIds,omitempty"`
+	Order            string `url:"queryOrder,omitempty"`
+	Deleted          string `url:"deletedFilter,omitempty"`
+	MaxPerDefinition string `url:"maxBuildsPerDefinition,omitempty"`
+	Token            string `url:"continuationToken,omitempty"`
+	Props            string `url:"properties,omitempty"`
+	Tags             string `url:"tagFilters,omitempty"`
+	Result           string `url:"resultFilter,omitempty"`
+	Status           string `url:"statusFilter,omitempty"`
+	Reason           string `url:"reasonFilter,omitempty"`
+	UserID           string `url:"requestedFor,omitempty"`
+	MaxTime          string `url:"maxTime,omitempty"`
+	MinTime          string `url:"minTime,omitempty"`
+	BuildNumber      string `url:"buildNumber,omitempty"`
+	Queues           string `url:"queues,omitempty"`
+	RepoType         string `url:"repositoryType,omitempty"`
 }
 
 // List returns list of the builds
