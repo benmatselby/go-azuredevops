@@ -130,14 +130,10 @@ func (s *BuildsService) List(opts *BuildsListOptions) ([]Build, error) {
 	return response.Builds, err
 }
 
-// BuildsListOptions describes what the request to the API should look like
+// QueueBuildOptions describes what the request to the API should look like
 type QueueBuildOptions struct {
 	IgnoreWarnings bool   `url:"ignoreWarnings,omitempty"`
 	CheckInTicket  string `url:"checkInTicket,omitempty"`
-}
-
-type QueueBuildResponse struct {
-	Build *Build `json:"value"`
 }
 
 // Queue inserts new build creation to queue
@@ -156,8 +152,7 @@ func (s *BuildsService) Queue(build *Build, opts *QueueBuildOptions) error {
 		return err
 	}
 
-	response := QueueBuildResponse{Build: build}
-	_, err = s.client.Execute(request, &response)
+	_, err = s.client.Execute(request, &build)
 
 	return err
 }
