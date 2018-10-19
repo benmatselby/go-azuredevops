@@ -78,12 +78,13 @@ func (c *Client) NewRequest(method, URL string, body interface{}) (*http.Request
 // NewBaseRequest does not take into consideration the project
 // and simply uses the base https://%s.visualstudio.com base URL
 func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Request, error) {
-	var buf io.Reader
-
+	var buf io.ReadWriter
 	if body != nil {
-		if jsonBody, err := json.Marshal(body); err == nil {
-			buf = bytes.NewBuffer(jsonBody)
-		} else {
+		buf = new(bytes.Buffer)
+		enc := json.NewEncoder(buf)
+		enc.SetEscapeHTML(false)
+		err := enc.Encode(body)
+		if err != nil {
 			return nil, err
 		}
 	}
