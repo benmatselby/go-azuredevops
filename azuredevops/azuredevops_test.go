@@ -1,7 +1,6 @@
 package azuredevops_test
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -55,15 +54,13 @@ func testMethod(t *testing.T, r *http.Request, want string) {
 	}
 }
 
-func testBody(t *testing.T, r *http.Request, expectedBody []byte) {
-	body, err := ioutil.ReadAll(r.Body)
-
+func testBody(t *testing.T, r *http.Request, want string) {
+	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		t.Errorf("Got error %s", err)
+		t.Errorf("Error reading request body: %v", err)
 	}
-
-	if !bytes.Equal(body, expectedBody) {
-		t.Errorf("Request body expected %s got %s", expectedBody, body)
+	if got := string(b); got != want {
+		t.Errorf("request Body is %s, want %s", got, want)
 	}
 }
 

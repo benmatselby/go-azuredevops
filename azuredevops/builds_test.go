@@ -100,16 +100,17 @@ func TestBuildsService_Queue(t *testing.T) {
 		responseBuild.Result = "succeeded"
 
 		mux.HandleFunc(queueBuildURL, func(w http.ResponseWriter, r *http.Request) {
-			queueBuildResponse, err := json.Marshal(responseBuild)
+			b, err := json.Marshal(responseBuild)
+			queueBuildResponse := string(b)
 
 			if err != nil {
 				t.Fatalf("returned error: %v", err)
 			}
 
 			testMethod(t, r, "POST")
-			testBody(t, r, queueBuildResponse)
+			testBody(t, r, queueBuildResponse+"\n")
 
-			fmt.Fprint(w, string(queueBuildResponse))
+			fmt.Fprint(w, queueBuildResponse)
 		})
 
 		options := &azuredevops.QueueBuildOptions{}
