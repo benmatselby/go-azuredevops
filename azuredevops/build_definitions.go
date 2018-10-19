@@ -16,15 +16,23 @@ type BuildDefinitionsListResponse struct {
 	Count            int               `json:"count"`
 }
 
+type Repository struct {
+	ID                 string                 `json:"id,omitempty"`
+	Type               string                 `json:"type,omitempty"`
+	Name               string                 `json:"name,omitempty"`
+	URL                string                 `json:"url,omitempty"`
+	RootFolder         string                 `json:"root_folder"`
+	Properties         map[string]interface{} `json:"properties"`
+	Clean              string                 `json:"clean"`
+	DefaultBranch      string                 `json:"default_branch"`
+	CheckoutSubmodules bool                   `json:"checkout_submodules"`
+}
+
 // BuildDefinition represents a build definition
 type BuildDefinition struct {
-	ID         int    `json:"id"`
-	Name       string `json:"name"`
-	Repository struct {
-		ID   string `json:"id,omitempty"`
-		Type string `json:"type,omitempty"`
-		Name string `json:"name,omitempty"`
-	} `json:"repository,omitempty"`
+	ID         int         `json:"id"`
+	Name       string      `json:"name"`
+	Repository *Repository `json:"repository,omitempty"`
 }
 
 // BuildDefinitionsListOptions describes what the request to the API should look like
