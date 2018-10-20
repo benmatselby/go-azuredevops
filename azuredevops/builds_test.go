@@ -100,7 +100,7 @@ func TestBuildsService_Queue(t *testing.T) {
 		responseBuild.Result = "succeeded"
 
 		mux.HandleFunc(queueBuildURL, func(w http.ResponseWriter, r *http.Request) {
-			b, err := json.Marshal(responseBuild)
+  		b, err := json.Marshal(responseBuild)
 			queueBuildResponse := string(b)
 
 			if err != nil {

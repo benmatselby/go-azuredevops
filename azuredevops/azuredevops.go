@@ -78,6 +78,7 @@ func (c *Client) NewRequest(method, URL string, body interface{}) (*http.Request
 // NewBaseRequest does not take into consideration the project
 // and simply uses the base https://%s.visualstudio.com base URL
 func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Request, error) {
+
 	var buf io.ReadWriter
 	if body != nil {
 		buf = new(bytes.Buffer)

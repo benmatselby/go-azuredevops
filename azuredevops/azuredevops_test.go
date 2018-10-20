@@ -1,6 +1,7 @@
 package azuredevops_test
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
