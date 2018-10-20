@@ -16,6 +16,7 @@ type BuildDefinitionsListResponse struct {
 	Count            int               `json:"count"`
 }
 
+// Repository represents a repository used by a build definition
 type Repository struct {
 	ID                 string                 `json:"id,omitempty"`
 	Type               string                 `json:"type,omitempty"`

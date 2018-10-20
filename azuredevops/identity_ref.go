@@ -1,5 +1,6 @@
 package azuredevops
 
+// IdentityRef represents a Azure Devops user
 type IdentityRef struct {
 	Descriptor     string `json:"descriptor"`
 	DirectoryAlias string `json:"directoryAlias"`
@@ -9,7 +10,7 @@ type IdentityRef struct {
 	Inactive       bool   `json:"inactive"`
 	IsAadIdentity  bool   `json:"isAadIdentity"`
 	IsContainer    bool   `json:"isContainer"`
-	ProfileUrl     string `json:"profileUrl"`
+	ProfileURL     string `json:"profileUrl"`
 	UniqueName     string `json:"uniqueName"`
 	URL            string `json:"url"`
 }

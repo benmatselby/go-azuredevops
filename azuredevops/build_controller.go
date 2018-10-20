@@ -1,5 +1,6 @@
 package azuredevops
 
+// BuildController represents a controller of the build service
 type BuildController struct {
 	CreatedDate string `json:"createdDate"`
 	Description string `json:"description"`
