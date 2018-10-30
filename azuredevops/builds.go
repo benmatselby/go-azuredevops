@@ -90,15 +90,22 @@ type Build struct {
 	URL          string   `json:"url,omitempty"`
 }
 
+// BuildListOrder is enum type for build list order
 type BuildListOrder string
 
 const (
-	FinishTimeAscending  BuildListOrder = "finishTimeAscending"
+	// FinishTimeAscending orders by finish build time asc
+	FinishTimeAscending BuildListOrder = "finishTimeAscending"
+	// FinishTimeDescending orders by finish build time desc
 	FinishTimeDescending BuildListOrder = "finishTimeDescending"
-	QueueTimeAscending   BuildListOrder = "queueTimeAscending"
-	QueueTimeDescending  BuildListOrder = "queueTimeDescending"
-	StartTimeAscending   BuildListOrder = "startTimeAscending"
-	StartTimeDescending  BuildListOrder = "startTimeDescending"
+	// QueueTimeAscending orders by build queue time asc
+	QueueTimeAscending BuildListOrder = "queueTimeAscending"
+	// QueueTimeDescending orders by build queue time desc
+	QueueTimeDescending BuildListOrder = "queueTimeDescending"
+	// StartTimeAscending orders by build start time asc
+	StartTimeAscending BuildListOrder = "startTimeAscending"
+	// StartTimeDescending orders by build start time desc
+	StartTimeDescending BuildListOrder = "startTimeDescending"
 )
 
 // BuildsListOptions describes what the request to the API should look like
