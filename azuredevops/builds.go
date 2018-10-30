@@ -44,7 +44,7 @@ type Build struct {
 		Description  string `json:"description"`
 		ID           string `json:"id"`
 		Name         string `json:"name"`
-		Revision     string `json:"revision"`
+		Revision     int    `json:"revision"`
 		State        string `json:"state"`
 		URL          string `json:"url"`
 		Visibility   string `json:"visibility"`
@@ -57,8 +57,8 @@ type Build struct {
 	Deleted             *bool                          `json:"deleted,omitempty"`
 	DeletedDate         string                         `json:"deletedDate,omitempty"`
 	DeletedReason       string                         `json:"deletedReason,omitempty"`
-	ID                  string                         `json:"id,omitempty"`
-	KeepForever         string                         `json:"keepForever,omitempty"`
+	ID                  int                            `json:"id,omitempty"`
+	KeepForever         bool                           `json:"keepForever,omitempty"`
 	ChangedDate         string                         `json:"lastChangedDate,omitempty"`
 	Params              string                         `json:"parameters,omitempty"`
 	Quality             string                         `json:"quality,omitempty"`
@@ -117,7 +117,7 @@ type BuildsListOptions struct {
 // List returns list of the builds
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds/list
 func (s *BuildsService) List(opts *BuildsListOptions) ([]Build, error) {
-	URL := fmt.Sprintf("/_apis/build/builds?api-version=4.1")
+	URL := fmt.Sprintf("_apis/build/builds?api-version=4.1")
 	URL, err := addOptions(URL, opts)
 
 	request, err := s.client.NewRequest("GET", URL, nil)
