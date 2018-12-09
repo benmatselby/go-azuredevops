@@ -81,6 +81,10 @@ func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Req
 
 	request, err := http.NewRequest(method, c.BaseURL+URL, buf)
 
+	if body != nil {
+		request.Header.Set("Content-Type", "application/json")
+	}
+
 	if c.UserAgent == "" {
 		c.UserAgent = userAgent
 	}
@@ -127,6 +131,10 @@ func addOptions(s string, opt interface{}) (string, error) {
 	qs, err := query.Values(opt)
 	if err != nil {
 		return s, err
+	}
+
+	for k, v := range u.Query() {
+		qs[k] = v
 	}
 
 	u.RawQuery = qs.Encode()
