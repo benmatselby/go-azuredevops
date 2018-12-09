@@ -22,14 +22,14 @@ type buildOrchestrationPlanSchema struct {
 
 // Build represents a build
 type Build struct {
-	Definition    BuildDefinition `json:"definition"`
-	Controller    BuildController `json:"controller"`
-	LastChangedBy *IdentityRef    `json:"lastChangedBy,omitempty"`
-	DeletedBy     *IdentityRef    `json:"deletedBy,omitempty"`
-	BuildNumber   string          `json:"buildNumber,omitempty"`
-	FinishTime    string          `json:"finishTime,omitempty"`
-	Branch        string          `json:"sourceBranch"`
-	Repository    Repository      `json:"repository"`
+	Definition    BuildDefinition  `json:"definition"`
+	Controller    *BuildController `json:"controller,omitempty"`
+	LastChangedBy *IdentityRef     `json:"lastChangedBy,omitempty"`
+	DeletedBy     *IdentityRef     `json:"deletedBy,omitempty"`
+	BuildNumber   string           `json:"buildNumber,omitempty"`
+	FinishTime    string           `json:"finishTime,omitempty"`
+	Branch        string           `json:"sourceBranch"`
+	Repository    Repository       `json:"repository"`
 	Demands       []struct {
 		Name  string `json:"name"`
 		Value string `json:"value"`
@@ -44,7 +44,7 @@ type Build struct {
 		Description  string `json:"description"`
 		ID           string `json:"id"`
 		Name         string `json:"name"`
-		Revision     string `json:"revision"`
+		Revision     int    `json:"revision"`
 		State        string `json:"state"`
 		URL          string `json:"url"`
 		Visibility   string `json:"visibility"`
@@ -57,8 +57,8 @@ type Build struct {
 	Deleted             *bool                          `json:"deleted,omitempty"`
 	DeletedDate         string                         `json:"deletedDate,omitempty"`
 	DeletedReason       string                         `json:"deletedReason,omitempty"`
-	ID                  string                         `json:"id,omitempty"`
-	KeepForever         string                         `json:"keepForever,omitempty"`
+	ID                  int                            `json:"id,omitempty"`
+	KeepForever         bool                           `json:"keepForever,omitempty"`
 	ChangedDate         string                         `json:"lastChangedDate,omitempty"`
 	Params              string                         `json:"parameters,omitempty"`
 	Quality             string                         `json:"quality,omitempty"`
@@ -90,34 +90,52 @@ type Build struct {
 	URL          string   `json:"url,omitempty"`
 }
 
+// BuildListOrder is enum type for build list order
+type BuildListOrder string
+
+const (
+	// FinishTimeAscending orders by finish build time asc
+	FinishTimeAscending BuildListOrder = "finishTimeAscending"
+	// FinishTimeDescending orders by finish build time desc
+	FinishTimeDescending BuildListOrder = "finishTimeDescending"
+	// QueueTimeAscending orders by build queue time asc
+	QueueTimeAscending BuildListOrder = "queueTimeAscending"
+	// QueueTimeDescending orders by build queue time desc
+	QueueTimeDescending BuildListOrder = "queueTimeDescending"
+	// StartTimeAscending orders by build start time asc
+	StartTimeAscending BuildListOrder = "startTimeAscending"
+	// StartTimeDescending orders by build start time desc
+	StartTimeDescending BuildListOrder = "startTimeDescending"
+)
+
 // BuildsListOptions describes what the request to the API should look like
 type BuildsListOptions struct {
-	Definitions      string `url:"definitions,omitempty"`
-	Branch           string `url:"branchName,omitempty"`
-	Count            int    `url:"$top,omitempty"`
-	Repository       string `url:"repositoryId,omitempty"`
-	BuildIDs         string `url:"buildIds,omitempty"`
-	Order            string `url:"queryOrder,omitempty"`
-	Deleted          string `url:"deletedFilter,omitempty"`
-	MaxPerDefinition string `url:"maxBuildsPerDefinition,omitempty"`
-	Token            string `url:"continuationToken,omitempty"`
-	Props            string `url:"properties,omitempty"`
-	Tags             string `url:"tagFilters,omitempty"`
-	Result           string `url:"resultFilter,omitempty"`
-	Status           string `url:"statusFilter,omitempty"`
-	Reason           string `url:"reasonFilter,omitempty"`
-	UserID           string `url:"requestedFor,omitempty"`
-	MaxTime          string `url:"maxTime,omitempty"`
-	MinTime          string `url:"minTime,omitempty"`
-	BuildNumber      string `url:"buildNumber,omitempty"`
-	Queues           string `url:"queues,omitempty"`
-	RepoType         string `url:"repositoryType,omitempty"`
+	Definitions      string         `url:"definitions,omitempty"`
+	Branch           string         `url:"branchName,omitempty"`
+	Count            int            `url:"$top,omitempty"`
+	Repository       string         `url:"repositoryId,omitempty"`
+	BuildIDs         string         `url:"buildIds,omitempty"`
+	Order            BuildListOrder `url:"queryOrder,omitempty"`
+	Deleted          string         `url:"deletedFilter,omitempty"`
+	MaxPerDefinition string         `url:"maxBuildsPerDefinition,omitempty"`
+	Token            string         `url:"continuationToken,omitempty"`
+	Props            string         `url:"properties,omitempty"`
+	Tags             string         `url:"tagFilters,omitempty"`
+	Result           string         `url:"resultFilter,omitempty"`
+	Status           string         `url:"statusFilter,omitempty"`
+	Reason           string         `url:"reasonFilter,omitempty"`
+	UserID           string         `url:"requestedFor,omitempty"`
+	MaxTime          string         `url:"maxTime,omitempty"`
+	MinTime          string         `url:"minTime,omitempty"`
+	BuildNumber      string         `url:"buildNumber,omitempty"`
+	Queues           string         `url:"queues,omitempty"`
+	RepoType         string         `url:"repositoryType,omitempty"`
 }
 
 // List returns list of the builds
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds/list
 func (s *BuildsService) List(opts *BuildsListOptions) ([]Build, error) {
-	URL := fmt.Sprintf("/_apis/build/builds?api-version=4.1")
+	URL := fmt.Sprintf("_apis/build/builds?api-version=4.1")
 	URL, err := addOptions(URL, opts)
 
 	request, err := s.client.NewRequest("GET", URL, nil)
