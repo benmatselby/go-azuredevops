@@ -26,7 +26,7 @@ clean: ## Clean the local environment
 
 .PHONY: install
 install: ## Install dependencies
-	dep ensure
+	go get ./...
 
 .PHONY: vet
 vet: ## Vet the code
@@ -43,6 +43,7 @@ build: ## Build the application
 .PHONY: test
 test: ## Run the unit tests
 	go test -v -race ./... -coverprofile=coverage.out
+	go tool cover -func=coverage.out
 
 .PHONY: test-cov
 test-cov: test ## Run the unit tests with coverage

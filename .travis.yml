@@ -4,15 +4,10 @@ go:
 notifications:
   email: true
 env:
-  - DEP_VERSION="0.5.0"
+  - GO111MODULE=on
 before_install:
-  # Download the binary to bin folder in $GOPATH
-  - curl -L -s https://github.com/golang/dep/releases/download/v${DEP_VERSION}/dep-linux-amd64 -o $GOPATH/bin/dep
-  # Make the binary executable
-  - chmod +x $GOPATH/bin/dep
   - go get golang.org/x/lint/golint
 script:
   - make all
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
