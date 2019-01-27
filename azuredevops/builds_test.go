@@ -3,9 +3,10 @@ package azuredevops_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/benmatselby/go-azuredevops/azuredevops"
 	"net/http"
 	"testing"
+
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 )
 
 const (
