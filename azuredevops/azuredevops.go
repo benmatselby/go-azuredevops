@@ -1,6 +1,7 @@
 package azuredevops
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -78,6 +79,15 @@ func (c *Client) NewRequest(method, URL string, body interface{}) (*http.Request
 // and simply uses the base https://%s.visualstudio.com base URL
 func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Request, error) {
 	var buf io.ReadWriter
+	if body != nil {
+		buf = new(bytes.Buffer)
+		enc := json.NewEncoder(buf)
+		enc.SetEscapeHTML(false)
+		err := enc.Encode(body)
+		if err != nil {
+			return nil, err
+		}
+	}
 
 	request, err := http.NewRequest(method, c.BaseURL+URL, buf)
 

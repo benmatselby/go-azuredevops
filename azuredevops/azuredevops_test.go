@@ -2,6 +2,7 @@ package azuredevops_test
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -42,7 +43,7 @@ func setup() (client *azuredevops.Client, mux *http.ServeMux, serverURL string, 
 	// The client being tested and is configured to use test server.
 	client = azuredevops.NewClient("AZURE_DEVOPS_Account", "AZURE_DEVOPS_Project", "AZURE_DEVOPS_TOKEN")
 
-	url, _ := url.Parse(server.URL + baseURLPath + "/")
+	url, _ := url.Parse(server.URL + baseURLPath)
 	client.BaseURL = url.String()
 	return client, mux, server.URL, server.Close
 }
@@ -50,6 +51,16 @@ func setup() (client *azuredevops.Client, mux *http.ServeMux, serverURL string, 
 func testMethod(t *testing.T, r *http.Request, want string) {
 	if got := r.Method; got != want {
 		t.Errorf("Request method: %v, want %v", got, want)
+	}
+}
+
+func testBody(t *testing.T, r *http.Request, want string) {
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		t.Errorf("Error reading request body: %v", err)
+	}
+	if got := string(b); got != want {
+		t.Errorf("request Body is %s, want %s", got, want)
 	}
 }
 

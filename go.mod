@@ -1,6 +1,3 @@
-module github.com/benmatselby/go-vsts
+module github.com/benmatselby/go-azuredevops
 
-require (
-	github.com/benmatselby/go-azuredevops v0.0.0-20190112144040-c2a0219308ca
-	github.com/google/go-querystring v1.0.0
-)
+require github.com/google/go-querystring v1.0.0

@@ -1,6 +1,7 @@
 package azuredevops_test
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"testing"
@@ -10,6 +11,7 @@ import (
 
 const (
 	buildListURL      = "/AZURE_DEVOPS_Project/_apis/build/builds"
+	queueBuildURL     = "/AZURE_DEVOPS_Project/_apis/build/builds"
 	buildListResponse = `{
 		"value": [
 			{
@@ -81,4 +83,55 @@ func TestBuildsService_List(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestBuildsService_Queue(t *testing.T) {
+	t.Run("Updates build struct with returned data", func(t *testing.T) {
+		c, mux, _, teardown := setup()
+		defer teardown()
+
+		requestBuild := &azuredevops.Build{
+			Status: "completed",
+			Definition: azuredevops.BuildDefinition{
+				Name: "build-one",
+			},
+		}
+
+		responseBuild := requestBuild
+		responseBuild.Result = "succeeded"
+
+		mux.HandleFunc(queueBuildURL, func(w http.ResponseWriter, r *http.Request) {
+			b, err := json.Marshal(responseBuild)
+			queueBuildResponse := string(b)
+
+			if err != nil {
+				t.Fatalf("returned error: %v", err)
+			}
+
+			testMethod(t, r, "POST")
+			testBody(t, r, queueBuildResponse+"\n")
+
+			fmt.Fprint(w, queueBuildResponse)
+		})
+
+		options := &azuredevops.QueueBuildOptions{}
+
+		err := c.Builds.Queue(requestBuild, options)
+
+		if err != nil {
+			t.Fatalf("returned error: %v", err)
+		}
+
+		if requestBuild.Result != responseBuild.Result {
+			t.Fatalf("expected result %s, got %s", responseBuild.Result, requestBuild.Result)
+		}
+
+		if requestBuild.Status != responseBuild.Status {
+			t.Fatalf("expected status %s, got %s", responseBuild.Status, requestBuild.Status)
+		}
+
+		if requestBuild.Definition.Name != responseBuild.Definition.Name {
+			t.Fatalf("expected definition name %s, got %s", responseBuild.Definition.Name, requestBuild.Definition.Name)
+		}
+	})
 }
