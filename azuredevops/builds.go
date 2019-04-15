@@ -88,6 +88,11 @@ type Build struct {
 	TriggerBuild *Build   `json:"triggeredByBuild,omitempty"`
 	URI          string   `json:"uri,omitempty"`
 	URL          string   `json:"url,omitempty"`
+	TriggerInfo  struct {
+		CiSourceBranch string `json:"ci.sourceBranch"`
+		CiSourceSha    string `json:"ci.sourceSha"`
+		CiMessage      string `json:"ci.message"`
+	} `json:"triggerInfo"`
 }
 
 // BuildListOrder is enum type for build list order
