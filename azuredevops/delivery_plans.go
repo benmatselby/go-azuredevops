@@ -8,7 +8,7 @@ import (
 // DeliveryPlansService handles communication with the deliverytimeline methods on the API
 // utilising https://docs.microsoft.com/en-us/rest/api/vsts/work/deliverytimeline
 type DeliveryPlansService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // DeliveryPlansListResponse describes the delivery plans list response

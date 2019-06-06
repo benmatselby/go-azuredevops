@@ -8,7 +8,7 @@ import (
 // IterationsService handles communication with the work items methods on the API
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/iterations
 type IterationsService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // IterationsResponse describes the iterations response

@@ -7,7 +7,7 @@ import (
 // BuildsService handles communication with the builds methods on the API
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/builds
 type BuildsService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // BuildsListResponse is the wrapper around the main response for the List of Builds

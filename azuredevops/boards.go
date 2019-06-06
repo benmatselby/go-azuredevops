@@ -8,11 +8,11 @@ import (
 // BoardsService handles communication with the boards methods on the API
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/work/boards
 type BoardsService struct {
-	client *Client
+	client *ProjectClient
 }
 
-// ListBoardsResponse describes the boards response
-type ListBoardsResponse struct {
+// BoardsListResponse describes the boards response
+type BoardsListResponse struct {
 	Boards []Board `json:"value"`
 }
 
@@ -41,7 +41,7 @@ func (s *BoardsService) List(team string) ([]Board, error) {
 	if err != nil {
 		return nil, err
 	}
-	var response ListBoardsResponse
+	var response BoardsListResponse
 	_, err = s.client.Execute(request, &response)
 
 	return response.Boards, err

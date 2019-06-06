@@ -8,7 +8,7 @@ import (
 // TestsService handles communication with the Tests methods on the API
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/test
 type TestsService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // TestListResponse is the wrapper around the main response for the List of Tests

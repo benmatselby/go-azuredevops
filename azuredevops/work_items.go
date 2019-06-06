@@ -10,7 +10,7 @@ import (
 // WorkItemsService handles communication with the work items methods on the API
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/wit/work%20items
 type WorkItemsService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // WorkItemsResponse describes the relationships between work items

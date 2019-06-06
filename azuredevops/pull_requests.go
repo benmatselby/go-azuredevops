@@ -5,7 +5,7 @@ import "fmt"
 // PullRequestsService handles communication with the pull requests methods on the API
 // utilising https://docs.microsoft.com/en-us/rest/api/vsts/git/pull%20requests
 type PullRequestsService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // PullRequestsResponse describes the pull requests response

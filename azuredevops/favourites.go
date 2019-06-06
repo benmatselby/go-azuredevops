@@ -7,7 +7,7 @@ import (
 // FavouritesService handles communication with the favourites methods on the API
 // So far it looks like this is undocumented, so this could change
 type FavouritesService struct {
-	client *Client
+	client *DevOpsClient
 }
 
 // FavouritesResponse describes the favourites response
@@ -31,7 +31,7 @@ func (s *FavouritesService) List() ([]Favourite, int, error) {
 		"Microsoft.TeamFoundation.Git.Repository", // @todo This needs fixing
 	)
 
-	request, err := s.client.NewBaseRequest("GET", URL, nil)
+	request, err := s.client.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, 0, err
 	}

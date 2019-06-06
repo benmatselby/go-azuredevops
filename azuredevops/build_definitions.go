@@ -7,7 +7,7 @@ import (
 // BuildDefinitionsService handles communication with the build definitions methods on the API
 // utilising https://docs.microsoft.com/en-gb/rest/api/vsts/build/definitions
 type BuildDefinitionsService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // BuildDefinitionsListResponse describes the build definitions list response

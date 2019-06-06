@@ -17,59 +17,88 @@ const (
 	userAgent = "go-azuredevops"
 )
 
-// Client for interacting with the Azure DevOps API
-type Client struct {
+// DevOpsClient represents methods for interacting with Core level of the Azure DevOps API
+// More info: https://docs.microsoft.com/en-us/rest/api/azure/devops/core/
+type DevOpsClient struct {
 	client *http.Client
 
 	BaseURL   string
 	UserAgent string
 
 	Account   string
-	Project   string
 	AuthToken string
+
+	// Services used to proxy to other API endpoints
+	Favourites *FavouritesService
+	Projects   *ProjectsService
+	Teams      *TeamsService
+}
+
+// ProjectClient represents methods for interacting with Project level of the Azure DevOps API
+type ProjectClient struct {
+	devOpsClient *DevOpsClient
+
+	Project string
 
 	// Services used to proxy to other API endpoints
 	Boards           *BoardsService
 	BuildDefinitions *BuildDefinitionsService
 	Builds           *BuildsService
 	DeliveryPlans    *DeliveryPlansService
-	Favourites       *FavouritesService
 	Git              *GitService
 	Iterations       *IterationsService
 	PullRequests     *PullRequestsService
-	Teams            *TeamsService
 	Tests            *TestsService
 	WorkItems        *WorkItemsService
 }
 
-// NewClient gets a new Azure DevOps Client
-func NewClient(account string, project string, token string) *Client {
-	c := &Client{
-		Account:   account,
-		Project:   project,
-		AuthToken: token,
-	}
-	c.BaseURL = fmt.Sprintf(baseURL, account)
+// NewClient gets a new Project Client for Azure DevOps API
+func NewClient(account string, project string, token string) *ProjectClient {
+	devOpsClient := NewDevOpsClient(account, token)
 
-	c.Boards = &BoardsService{client: c}
-	c.BuildDefinitions = &BuildDefinitionsService{client: c}
-	c.Builds = &BuildsService{client: c}
+	return devOpsClient.NewProjectClient(project)
+}
+
+// NewDevOpsClient gets a new Azure DevOps Client
+func NewDevOpsClient(account string, token string) *DevOpsClient {
+	c := &DevOpsClient{
+		Account:   account,
+		AuthToken: token,
+		UserAgent: userAgent,
+	}
+
+	c.BaseURL = fmt.Sprintf(baseURL, account)
 	c.Favourites = &FavouritesService{client: c}
-	c.Git = &GitService{client: c}
-	c.Iterations = &IterationsService{client: c}
-	c.PullRequests = &PullRequestsService{client: c}
-	c.WorkItems = &WorkItemsService{client: c}
+	c.Projects = &ProjectsService{client: c}
 	c.Teams = &TeamsService{client: c}
-	c.Tests = &TestsService{client: c}
-	c.DeliveryPlans = &DeliveryPlansService{client: c}
 
 	return c
 }
 
-// NewRequest creates an API request where the URL is relative from https://%s.visualstudio.com/%s.
+// NewProjectClient gets a new Project Client for Azure DevOps API
+func (c *DevOpsClient) NewProjectClient(project string) *ProjectClient {
+	client := &ProjectClient{
+		devOpsClient: c,
+		Project:      project,
+	}
+
+	client.Boards = &BoardsService{client: client}
+	client.BuildDefinitions = &BuildDefinitionsService{client: client}
+	client.Builds = &BuildsService{client: client}
+	client.Git = &GitService{client: client}
+	client.Iterations = &IterationsService{client: client}
+	client.PullRequests = &PullRequestsService{client: client}
+	client.WorkItems = &WorkItemsService{client: client}
+	client.Tests = &TestsService{client: client}
+	client.DeliveryPlans = &DeliveryPlansService{client: client}
+
+	return client
+}
+
+// NewRequest creates an API request where the URL is relative from https://dev.azure.com/%s.
 // Basically this includes the project which is most requests to the API
-func (c *Client) NewRequest(method, URL string, body interface{}) (*http.Request, error) {
-	request, err := c.NewBaseRequest(
+func (c *ProjectClient) NewRequest(method, URL string, body interface{}) (*http.Request, error) {
+	request, err := c.devOpsClient.NewRequest(
 		method,
 		fmt.Sprintf("/%s/%s", url.PathEscape(c.Project), URL),
 		body,
@@ -77,9 +106,9 @@ func (c *Client) NewRequest(method, URL string, body interface{}) (*http.Request
 	return request, err
 }
 
-// NewBaseRequest does not take into consideration the project
-// and simply uses the base https://%s.visualstudio.com base URL
-func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Request, error) {
+// NewRequest creates an API request where the URL is relative from https://dev.azure.com/%s.
+// and simply uses the base https://dev.azure.com base URL
+func (c *DevOpsClient) NewRequest(method, URL string, body interface{}) (*http.Request, error) {
 	var buf io.ReadWriter
 	if body != nil {
 		buf = new(bytes.Buffer)
@@ -105,7 +134,12 @@ func (c *Client) NewBaseRequest(method, URL string, body interface{}) (*http.Req
 }
 
 // Execute runs all the http requests on the API
-func (c *Client) Execute(request *http.Request, r interface{}) (*http.Response, error) {
+func (c *ProjectClient) Execute(request *http.Request, r interface{}) (*http.Response, error) {
+	return c.devOpsClient.Execute(request, r)
+}
+
+// Execute runs all the http requests on the API
+func (c *DevOpsClient) Execute(request *http.Request, r interface{}) (*http.Response, error) {
 	request.SetBasicAuth("", c.AuthToken)
 
 	client := &http.Client{}

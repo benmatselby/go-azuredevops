@@ -8,7 +8,7 @@ import (
 // GitService handles communication with the git methods on the API
 // See: https://docs.microsoft.com/en-us/rest/api/vsts/git/
 type GitService struct {
-	client *Client
+	client *ProjectClient
 }
 
 // GitListRefsResponse describes the git refs list response

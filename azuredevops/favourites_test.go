@@ -43,7 +43,7 @@ func TestFavouritesService_List(t *testing.T) {
 
 	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
-			c, mux, _, teardown := setup()
+			c, mux, _, teardown := setupDevOpsClient()
 			defer teardown()
 
 			mux.HandleFunc(tc.URL, func(w http.ResponseWriter, r *http.Request) {
