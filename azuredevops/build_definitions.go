@@ -16,8 +16,8 @@ type BuildDefinitionsListResponse struct {
 	Count            int               `json:"count"`
 }
 
-// Repository represents a repository used by a build definition
-type Repository struct {
+// BuildRepository represents a repository used by a build definition
+type BuildRepository struct {
 	ID                 string                 `json:"id,omitempty"`
 	Type               string                 `json:"type,omitempty"`
 	Name               string                 `json:"name,omitempty"`
@@ -31,9 +31,9 @@ type Repository struct {
 
 // BuildDefinition represents a build definition
 type BuildDefinition struct {
-	ID         int         `json:"id"`
-	Name       string      `json:"name"`
-	Repository *Repository `json:"repository,omitempty"`
+	ID         int              `json:"id"`
+	Name       string           `json:"name"`
+	Repository *BuildRepository `json:"repository,omitempty"`
 }
 
 // BuildDefinitionsListOptions describes what the request to the API should look like

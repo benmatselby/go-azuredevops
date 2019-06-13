@@ -11,6 +11,24 @@ type GitService struct {
 	client *ProjectClient
 }
 
+// RepositoriesListResponse describes git list response
+type RepositoriesListResponse struct {
+	Repositories []Repository `json:"value"`
+	Count        int          `json:"count,omitempty"`
+}
+
+// Repository describes a git repository
+type Repository struct {
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	URL           string `json:"url"`
+	DefaultBranch string `json:"defaultBranch"`
+	Size          int    `json:"size"`
+	RemoteURL     string `json:"remoteUrl"`
+	SSHURL        string `json:"sshUrl"`
+	WebURL        string `json:"webUrl"`
+}
+
 // GitListRefsResponse describes the git refs list response
 type GitListRefsResponse struct {
 	Count int   `json:"count"`
@@ -47,6 +65,19 @@ type GitRefListOptions struct {
 	Filter             string `url:"filter,omitempty"`
 	IncludeStatuses    bool   `url:"includeStatuses,omitempty"`
 	LatestStatusesOnly bool   `url:"latestStatusesOnly,omitempty"`
+}
+
+func (s *GitService) List() ([]Repository, error) {
+	URL := "/_apis/git/repositories?api-version=5.0"
+
+	request, err := s.client.NewRequest("GET", URL, nil)
+	if err != nil {
+		return nil, err
+	}
+	var response RepositoriesListResponse
+	_, err = s.client.Execute(request, &response)
+
+	return response.Repositories, err
 }
 
 // ListRefs returns a list of the references for a git repo
