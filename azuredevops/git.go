@@ -67,6 +67,7 @@ type GitRefListOptions struct {
 	LatestStatusesOnly bool   `url:"latestStatusesOnly,omitempty"`
 }
 
+// List returns a list of the repositories
 func (s *GitService) List() ([]Repository, error) {
 	URL := "/_apis/git/repositories?api-version=5.0"
 

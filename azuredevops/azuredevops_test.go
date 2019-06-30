@@ -23,7 +23,7 @@ func setup() (client *azuredevops.ProjectClient, mux *http.ServeMux, serverURL s
 	devOpsClient, mux, serverURL, teardown := setupDevOpsClient()
 
 	client = devOpsClient.NewProjectClient("AZURE_DEVOPS_Project")
-	
+
 	return client, mux, serverURL, teardown
 }
 
@@ -80,7 +80,7 @@ func testURL(t *testing.T, r *http.Request, want string) {
 
 func Test_NewClient(t *testing.T) {
 	devOpsClient := azuredevops.NewDevOpsClient("AZURE_DEVOPS_ACCOUNT", "AZURE_DEVOPS_TOKEN")
-	
+
 	if devOpsClient.Account != "AZURE_DEVOPS_ACCOUNT" {
 		t.Errorf("Client.Account = %s; expected %s", devOpsClient.Account, "AZURE_DEVOPS_ACCOUNT")
 	}
@@ -94,6 +94,4 @@ func Test_NewClient(t *testing.T) {
 	if projectClient.Project != "AZURE_DEVOPS_Project" {
 		t.Errorf("Client.Project = %s; expected %s", projectClient.Project, "AZURE_DEVOPS_Project")
 	}
-
-	
 }

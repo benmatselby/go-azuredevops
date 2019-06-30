@@ -52,8 +52,8 @@ type ProjectClient struct {
 	WorkItems        *WorkItemsService
 }
 
-// NewClient gets a new Project Client for Azure DevOps API
-func NewClient(account string, project string, token string) *ProjectClient {
+// NewProjectClient gets a new Project Client for Azure DevOps API
+func NewProjectClient(account string, project string, token string) *ProjectClient {
 	devOpsClient := NewDevOpsClient(account, token)
 
 	return devOpsClient.NewProjectClient(project)
