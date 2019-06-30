@@ -44,7 +44,51 @@ const (
 			"url": "https://fabrikam.visualstudio.com/_apis/git/repositories/278d5cd2-584d-4b63-824a-2ba458937249/refs/tags/v2.0"
 		  }
 		]
-	  }`
+		}`
+	gitListURL      = "/AZURE_DEVOPS_Project/_apis/git/repositories"
+	gitListResponse = `{
+			"value": [{
+					"id": "9ae84a75-c776-4c08-83b8-f9b19c520c99",
+					"name": "Repo1",
+					"url": "https://fabrikam.visualstudio.com/7a5df255-147e-4e18-b9d7-68fca6102808/_apis/git/repositories/9ae84a75-c776-4c08-83b8-f9b19c520c99",
+					"project": {
+							"id": "7a5df255-147e-4e18-b9d7-68fca6102808",
+							"name": "AZURE_DEVOPS_Project",
+							"description": "Project description.",
+							"url": "https://fabrikam.visualstudio.com/_apis/projects/7a5df255-147e-4e18-b9d7-68fca6102808",
+							"state": "wellFormed",
+							"revision": 412,
+							"visibility": "private",
+							"lastUpdateTime": "2019-06-10T14:49:21.857Z"
+					},
+					"defaultBranch": "refs/heads/master",
+					"size": 114417,
+					"remoteUrl": "https://fabrikam.visualstudio.com/AZURE_DEVOPS_Project/_git/Repo1",
+					"sshUrl": "fabrikam@vs-ssh.visualstudio.com:v3/fabrikam/AZURE_DEVOPS_Project/Repo1",
+					"webUrl": "https://fabrikam.visualstudio.com/AZURE_DEVOPS_Project/_git/Repo1"
+			},
+			{
+				"id": "9ae84a75-c776-4c08-83b8-f9b19c520c99",
+				"name": "Repo 2",
+				"url": "https://fabrikam.visualstudio.com/7a5df255-147e-4e18-b9d7-68fca6102808/_apis/git/repositories/9ae84a75-c776-4c08-83b8-f9b19c520c99",
+				"project": {
+						"id": "7a5df255-147e-4e18-b9d7-68fca6102808",
+						"name": "AZURE_DEVOPS_Project",
+						"description": "Project description.",
+						"url": "https://fabrikam.visualstudio.com/_apis/projects/7a5df255-147e-4e18-b9d7-68fca6102808",
+						"state": "wellFormed",
+						"revision": 412,
+						"visibility": "private",
+						"lastUpdateTime": "2019-06-10T14:49:21.857Z"
+				},
+				"defaultBranch": "refs/heads/master",
+				"size": 114417,
+				"remoteUrl": "https://fabrikam.visualstudio.com/AZURE_DEVOPS_Project/_git/Repo2",
+				"sshUrl": "fabrikam@vs-ssh.visualstudio.com:v3/fabrikam/AZURE_DEVOPS_Project/Repo2",
+				"webUrl": "https://fabrikam.visualstudio.com/AZURE_DEVOPS_Project/_git/Repo2"
+			}],
+			"count": 2
+		}`
 )
 
 func TestGitService_ListRefs(t *testing.T) {
@@ -93,6 +137,48 @@ func TestGitService_ListRefs(t *testing.T) {
 
 			if count != tc.count {
 				t.Fatalf("expected git ref count to be %d; got %d", tc.count, count)
+			}
+		})
+	}
+}
+
+func TestGitService_List(t *testing.T) {
+	tt := []struct {
+		name           string
+		URL            string
+		response       string
+		count          int
+		index          int
+		repositoryName string
+	}{
+		{name: "return two repositories", URL: gitListURL, response: gitListResponse, count: 2, index: 0, repositoryName: "Repo1"},
+		{name: "can handle no repositories returned", URL: gitListURL, response: "{}", count: 0, index: -1},
+	}
+
+	for _, tc := range tt {
+		t.Run(tc.name, func(t *testing.T) {
+			c, mux, _, teardown := setup()
+			defer teardown()
+
+			mux.HandleFunc(tc.URL, func(w http.ResponseWriter, r *http.Request) {
+				testMethod(t, r, "GET")
+				json := tc.response
+				fmt.Fprint(w, json)
+			})
+
+			repositories, err := c.Git.List()
+			if err != nil {
+				t.Fatalf("returned error: %v", err)
+			}
+
+			if tc.index > -1 {
+				if repositories[tc.index].Name != tc.repositoryName {
+					t.Fatalf("expected result %s, got %s", tc.repositoryName, repositories[tc.index].Name)
+				}
+			}
+
+			if len(repositories) != tc.count {
+				t.Fatalf("expected length of repositories to be %d; got %d", tc.count, len(repositories))
 			}
 		})
 	}
