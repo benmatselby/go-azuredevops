@@ -1,3 +1,6 @@
 coverage.out
 debug.test
 vendor/
+
+# Sonar
+.scannerwork/
