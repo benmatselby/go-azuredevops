@@ -26,7 +26,19 @@ const (
 			  "System.State": "New",
 			  "System.Reason": "New backlog item",
 			  "System.CreatedDate": "2014-12-29T20:49:20.77Z",
-			  "System.CreatedBy": "Jamal Hartnett ",
+			  "System.CreatedBy": {
+          "displayName": "Jamal Hartnett",
+          "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "_links": {
+            "avatar": {
+              "href": "https://dev.azure.com/mseng/_apis/GraphProfile/MemberAvatars/aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+            }
+          },
+          "id": "d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "uniqueName": "fabrikamfiber4@hotmail.com",
+          "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "descriptor": "aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+        },
 			  "System.ChangedDate": "2014-12-29T20:49:20.77Z",
 			  "System.ChangedBy": "Jamal Hartnett ",
 			  "System.Title": "Customer can sign in using their Microsoft Account",
@@ -46,9 +58,33 @@ const (
 			  "System.WorkItemType": "Task",
 			  "System.State": "To Do",
 			  "System.Reason": "New task",
-			  "System.AssignedTo": "Johnnie McLeod ",
+			  "System.AssignedTo": {
+          "displayName": "Jamal Hartnett",
+          "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "_links": {
+            "avatar": {
+              "href": "https://dev.azure.com/mseng/_apis/GraphProfile/MemberAvatars/aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+            }
+          },
+          "id": "d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "uniqueName": "fabrikamfiber4@hotmail.com",
+          "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "descriptor": "aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+        },
 			  "System.CreatedDate": "2014-12-29T20:49:21.617Z",
-			  "System.CreatedBy": "Jamal Hartnett ",
+			  "System.CreatedBy": {
+          "displayName": "Jamal Hartnett",
+          "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "_links": {
+            "avatar": {
+              "href": "https://dev.azure.com/mseng/_apis/GraphProfile/MemberAvatars/aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+            }
+          },
+          "id": "d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "uniqueName": "fabrikamfiber4@hotmail.com",
+          "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "descriptor": "aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+        },
 			  "System.ChangedDate": "2014-12-29T20:49:28.74Z",
 			  "System.ChangedBy": "Jamal Hartnett ",
 			  "System.Title": "JavaScript implementation for Microsoft Account",
@@ -69,7 +105,19 @@ const (
 			  "System.State": "To Do",
 			  "System.Reason": "New task",
 			  "System.CreatedDate": "2014-12-29T20:49:22.103Z",
-			  "System.CreatedBy": "Jamal Hartnett ",
+			  "System.CreatedBy": {
+          "displayName": "Jamal Hartnett",
+          "url": "https://vssps.dev.azure.com/fabrikam/_apis/Identities/d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "_links": {
+            "avatar": {
+              "href": "https://dev.azure.com/mseng/_apis/GraphProfile/MemberAvatars/aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+            }
+          },
+          "id": "d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "uniqueName": "fabrikamfiber4@hotmail.com",
+          "imageUrl": "https://dev.azure.com/fabrikam/_api/_common/identityImage?id=d291b0c4-a05c-4ea6-8df1-4b41d5f39eff",
+          "descriptor": "aad.YTkzODFkODYtNTYxYS03ZDdiLWJjM2QtZDUzMjllMjM5OTAz"
+        },
 			  "System.ChangedDate": "2014-12-29T20:49:22.103Z",
 			  "System.ChangedBy": "Jamal Hartnett ",
 			  "System.Title": "Unit Testing for MSA login",
@@ -134,9 +182,9 @@ func TestWorkItems_GetForIteration(t *testing.T) {
 		{
 			name:              "we get ids and we get iterations",
 			idsBaseURL:        getIdsURL,
-			actualIdsURL:      "/AZURE_DEVOPS_Project/AZURE_DEVOPS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=4.1-preview",
+			actualIdsURL:      "/AZURE_DEVOPS_Project/AZURE_DEVOPS_TEAM/_apis/work/teamsettings/iterations/1/workitems?api-version=6.1-preview.1",
 			getBaseURL:        getURL,
-			actualGetURL:      "/AZURE_DEVOPS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo,System.Tags&api-version=4.1-preview",
+			actualGetURL:      "/AZURE_DEVOPS_Project/_apis/wit/workitems?ids=1,3&fields=System.Id,System.Title,System.State,System.WorkItemType,Microsoft.VSTS.Scheduling.StoryPoints,System.BoardColumn,System.CreatedBy,System.AssignedTo,System.Tags&api-version=6.1-preview.3",
 			idsResponse:       getIdsResponse,
 			getResponse:       getResponse,
 			expectedWorkItems: 3,
