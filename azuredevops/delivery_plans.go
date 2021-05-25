@@ -63,7 +63,7 @@ type DeliveryPlansListOptions struct {
 
 // List returns a list of delivery plans
 func (s *DeliveryPlansService) List(opts *DeliveryPlansListOptions) ([]DeliveryPlan, int, error) {
-	URL := fmt.Sprintf("_apis/work/plans?api-version=5.0-preview.6")
+	URL := fmt.Sprintf("_apis/work/plans?api-version=6.1-preview.1")
 	URL, err := addOptions(URL, opts)
 
 	request, err := s.client.NewRequest("GET", URL, nil)
