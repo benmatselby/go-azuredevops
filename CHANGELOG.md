@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0
+
+- Bumped some of the API versions used.
+- Introduced the "Person" structure for fields like `CreatedBy` and `AssignedTo`.
+
 ## 0.3.0
 
 - Bumped some of the API versions used.

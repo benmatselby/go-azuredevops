@@ -40,6 +40,11 @@ type WorkItem struct {
 	Fields WorkItemFields `json:"fields"`
 }
 
+// Person represents the object coming back from the API.
+type Person struct {
+	DisplayName string `json:"displayName"`
+}
+
 // WorkItemFields describes all the fields for a given work item
 type WorkItemFields struct {
 	ID          int     `json:"System.Id"`
@@ -48,8 +53,8 @@ type WorkItemFields struct {
 	Type        string  `json:"System.WorkItemType"`
 	Points      float64 `json:"Microsoft.VSTS.Scheduling.StoryPoints"`
 	BoardColumn string  `json:"System.BoardColumn"`
-	CreatedBy   string  `json:"System.CreatedBy"`
-	AssignedTo  string  `json:"System.AssignedTo"`
+	CreatedBy   Person  `json:"System.CreatedBy"`
+	AssignedTo  Person  `json:"System.AssignedTo"`
 	Tags        string  `json:"System.Tags"`
 	TagList     []string
 }
@@ -79,7 +84,7 @@ func (s *WorkItemsService) GetForIteration(team string, iteration Iteration) ([]
 		"/_apis/wit/workitems?ids=%s&fields=%s&api-version=%s",
 		strings.Join(workIds, ","),
 		strings.Join(fields, ","),
-		"4.1-preview",
+		"6.1-preview.3",
 	)
 
 	request, err := s.client.NewRequest("GET", URL, nil)
@@ -104,7 +109,7 @@ func (s *WorkItemsService) GetIdsForIteration(team string, iteration Iteration) 
 		"/%s/_apis/work/teamsettings/iterations/%s/workitems?api-version=%s",
 		url.PathEscape(team),
 		iteration.ID,
-		"4.1-preview",
+		"6.1-preview.1",
 	)
 
 	request, err := s.client.NewRequest("GET", URL, nil)
